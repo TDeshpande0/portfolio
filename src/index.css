@@ -171,6 +171,60 @@
       0/100% 34px local;
   }
 
+  /* Boarding pass halves: semicircle notches cut where the stub tears off.
+     Each half carries its own notches so they move with it. The stub sits
+     below the ticket on phones and to its right on desktop. */
+  .ticket-main {
+    -webkit-mask:
+      radial-gradient(circle at 0 100%, transparent 11px, #000 11.5px) left /
+        51% 100% no-repeat,
+      radial-gradient(circle at 100% 100%, transparent 11px, #000 11.5px)
+        right / 51% 100% no-repeat;
+    mask:
+      radial-gradient(circle at 0 100%, transparent 11px, #000 11.5px) left /
+        51% 100% no-repeat,
+      radial-gradient(circle at 100% 100%, transparent 11px, #000 11.5px)
+        right / 51% 100% no-repeat;
+  }
+  .ticket-stub {
+    -webkit-mask:
+      radial-gradient(circle at 0 0, transparent 11px, #000 11.5px) left / 51%
+        100% no-repeat,
+      radial-gradient(circle at 100% 0, transparent 11px, #000 11.5px) right /
+        51% 100% no-repeat;
+    mask:
+      radial-gradient(circle at 0 0, transparent 11px, #000 11.5px) left / 51%
+        100% no-repeat,
+      radial-gradient(circle at 100% 0, transparent 11px, #000 11.5px) right /
+        51% 100% no-repeat;
+  }
+  @media (min-width: theme("screens.md")) {
+    .ticket-main {
+      -webkit-mask:
+        radial-gradient(circle at 100% 0, transparent 11px, #000 11.5px) top /
+          100% 51% no-repeat,
+        radial-gradient(circle at 100% 100%, transparent 11px, #000 11.5px)
+          bottom / 100% 51% no-repeat;
+      mask:
+        radial-gradient(circle at 100% 0, transparent 11px, #000 11.5px) top /
+          100% 51% no-repeat,
+        radial-gradient(circle at 100% 100%, transparent 11px, #000 11.5px)
+          bottom / 100% 51% no-repeat;
+    }
+    .ticket-stub {
+      -webkit-mask:
+        radial-gradient(circle at 0 0, transparent 11px, #000 11.5px) top / 100%
+          51% no-repeat,
+        radial-gradient(circle at 0 100%, transparent 11px, #000 11.5px)
+          bottom / 100% 51% no-repeat;
+      mask:
+        radial-gradient(circle at 0 0, transparent 11px, #000 11.5px) top / 100%
+          51% no-repeat,
+        radial-gradient(circle at 0 100%, transparent 11px, #000 11.5px)
+          bottom / 100% 51% no-repeat;
+    }
+  }
+
   /* Postage stamp with perforated (scalloped) edges. */
   .stamp-perforation {
     -webkit-mask:

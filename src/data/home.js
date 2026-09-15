@@ -81,30 +81,31 @@ export const SKILL_TAGS = [
 ];
 
 // Boarding passes in the work section. Set `href` to a case study route to
-// make the pass open it; leave it null for projects without a page yet.
+// make the pass open it; leave it null for projects without a page yet
+// (they show as "coming soon"). `accent` colours the ticket's top band.
 export const PROJECTS = [
   {
     category: "branding",
-    from: "ORBIT",
-    to: "LAUNCH",
+    title: "Orbit Brand Identity",
     blurb:
       "A full identity system for a satellite logistics startup — wordmark, motion, and a launch site.",
     href: null,
+    accent: "#FF5A4E",
   },
   {
     category: "product · accessibility",
-    from: "DELTA",
-    to: "BOOKED",
+    title: "Delta Airlines Re‑Design",
     blurb:
       "Redesigned Delta's flight-booking flow for speed and accessibility — research, IA, and a full hi-fi prototype.",
     href: ROUTES.deltaCaseStudy,
+    accent: "#00A6A0",
   },
   {
     category: "motion",
-    from: "FOLD",
-    to: "FLIP",
+    title: "Fold & Flip Motion Series",
     blurb:
       "A personal series exploring flip and fold transitions inspired by paper ephemera.",
     href: null,
+    accent: "#FF5D8F",
   },
 ];
