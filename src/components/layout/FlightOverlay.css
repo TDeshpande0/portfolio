@@ -1,0 +1,67 @@
+.tp .fly {
+  position: fixed;
+  inset: 0;
+  background: var(--navy-deep);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: tp-fade 0.25s ease forwards;
+}
+.tp .fly .track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 2px;
+  opacity: 0.5;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--gold) 0 10px,
+    transparent 10px 20px
+  );
+}
+.tp .fly .plane {
+  position: absolute;
+  top: 50%;
+  width: 70px;
+  height: 70px;
+  animation: tp-flyacross 2.8s cubic-bezier(0.45, 0, 0.4, 1) forwards;
+}
+.tp .fly .label {
+  position: absolute;
+  bottom: 60px;
+  font-family: "Space Mono", monospace;
+  color: var(--kraft);
+  letter-spacing: 3px;
+  font-size: 12px;
+  opacity: 0;
+  animation: tp-fadein 0.4s ease 0.5s forwards;
+}
+
+@keyframes tp-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes tp-fadein {
+  to {
+    opacity: 1;
+  }
+}
+@keyframes tp-flyacross {
+  0% {
+    left: -100px;
+    transform: translateY(-50%) rotate(0deg) scale(0.85);
+  }
+  50% {
+    transform: translateY(-110px) rotate(-6deg) scale(1.05);
+  }
+  100% {
+    left: 105%;
+    transform: translateY(-170px) rotate(-3deg) scale(1.2);
+  }
+}

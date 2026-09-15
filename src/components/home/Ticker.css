@@ -1,0 +1,43 @@
+.tp .ticker {
+  background: var(--ink);
+  overflow: hidden;
+  border-bottom: 3px solid var(--ink);
+}
+/* two identical groups, each wider than any screen, so a -50% slide loops seamlessly */
+.tp .ticker-track {
+  display: flex;
+  width: max-content;
+  animation: tp-scroll 90s linear infinite;
+}
+.tp .ticker-group {
+  display: flex;
+  flex-shrink: 0;
+  min-width: 100vw;
+  justify-content: space-around;
+}
+.tp .ticker-item {
+  padding: 9px 0;
+  font-family: "Space Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 3px;
+  color: var(--kraft);
+  white-space: nowrap;
+}
+.tp .ticker-item .plane {
+  margin: 0 28px;
+  color: var(--gold);
+}
+@keyframes tp-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tp .ticker-track {
+    animation: none;
+  }
+}

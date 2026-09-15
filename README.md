@@ -1,61 +1,70 @@
 # Tanvi Deshpande — Portfolio
 
-A React + Vite portfolio site, scaffolded from the original `Portfolio Artifact.jsx` proof of concept (preserved unmodified in `reference/` and now living at `src/App.jsx`).
+A React + Vite portfolio site, built from the original `Portfolio Artifact.jsx` proof of concept (preserved unmodified in `reference/`).
 
 ## Stack
 
-- **React 18** + **Vite** — build tooling (chosen over Create React App, which is deprecated)
-- **Tailwind CSS** — configured and ready to use for any new components you add; the existing homepage/case-study UI uses its own hand-written CSS (injected via a `<style>` tag in `src/App.jsx`) and does not depend on Tailwind
-- **Headless UI** (`@headlessui/react`) — open-source, unstyled accessible components (menus, dialogs, tabs, etc.), installed and ready for when you add new interactive UI
-- **lucide-react** — icon set already used by the artifact
+- **React 18** + **Vite** — build tooling
+- **React Router** — page routes (each case study has its own URL)
+- **Plain CSS files** — each component has a stylesheet next to it; site-wide tokens live in `src/styles/base.css`
+- **Tailwind CSS** — configured and available for new components (the existing UI doesn't depend on it)
+- **Headless UI** — unstyled accessible components (menus, dialogs, tabs), ready for new interactive UI
+- **lucide-react** — icons
+- **Prettier** — formatting (`npm run format`)
 
 ## Project structure
 
 ```
-.
-├── index.html              # Vite entry HTML
-├── public/
-│   └── favicon.svg
-├── reference/
-│   └── Portfolio Artifact.jsx   # original artifact file, untouched
-├── src/
-│   ├── App.jsx              # the artifact content — homepage + case study + all styles
-│   ├── main.jsx             # React root / mounts <App />
-│   └── index.css            # Tailwind directives
-├── tailwind.config.js
-├── postcss.config.js
-├── vite.config.js
-├── eslint.config.js
-└── package.json
+src/
+├── main.jsx                 # mounts the app inside the router
+├── App.jsx                  # route table: which page renders at which URL
+├── routes.js                # URL paths, shared by App.jsx and the content files
+├── index.css                # Tailwind directives
+├── styles/
+│   └── base.css             # colour tokens, resets, shared layout (section, footer, headings)
+├── data/                    # ✏️  editable site content
+│   ├── home.js              # hero text, ticker destinations, passport fields, skill tags, projects
+│   └── site.js              # contact email
+├── pages/
+│   ├── home/
+│   │   └── HomePage.jsx     # assembles the homepage sections
+│   └── work/
+│       └── delta-airlines-redesign/
+│           ├── DeltaCaseStudyPage.jsx   # the case study's written content + layout
+│           └── content.js               # its structured data (meta, phases, comparison table)
+├── components/
+│   ├── layout/              # SiteLayout (page wrapper), SiteNav, FlightProvider (plane transition)
+│   ├── home/                # Hero, Ticker, Passport, SkillTags, LuggageTag, WorkSection, BoardingPass, Postcard
+│   ├── case-study/          # reusable case-study blocks: CaseStudyHero, PhaseRoute, CaseStudySection,
+│   │                        #   InfoCard, ComparisonTable, Figure (+ shared case-study.css)
+│   └── illustrations/       # SVG artwork: BeachScene, Lily, HibiscusFlower, PlaneMark
+└── hooks/                   # usePendulum (tag swing physics), usePointerVelocity, useFlight, useDocumentTitle
 ```
+
+All site styles are scoped under the `.tp` class, which `SiteLayout` puts on the root element.
 
 ## Getting started
 
-Install dependencies:
-
 ```bash
-npm install
+npm install     # install dependencies
+npm run dev     # start the dev server (usually http://localhost:5173)
+npm run build   # production build
+npm run preview # preview the production build locally
+npm run format  # format everything in src/ with Prettier
 ```
 
-Run the dev server:
+## Common edits
 
-```bash
-npm run dev
-```
+- **Change homepage text, skills, or projects:** edit `src/data/home.js`.
+- **Tune the luggage tag swing:** edit `SWING` in `src/hooks/usePendulum.js`.
+- **Restyle a component:** open the `.css` file next to it.
 
-Then open the URL printed in the terminal (usually `http://localhost:5173`).
+### Adding a new case study
 
-Build for production:
-
-```bash
-npm run build
-```
-
-Preview the production build locally:
-
-```bash
-npm run preview
-```
+1. Add its URL to `src/routes.js`, e.g. `orbitCaseStudy: "/work/orbit-launch"`.
+2. Create `src/pages/work/orbit-launch/OrbitCaseStudyPage.jsx` (copy the Delta page as a starting point) and, if needed, a `content.js` next to it.
+3. Register the route in `src/App.jsx`: `<Route path={ROUTES.orbitCaseStudy} element={<OrbitCaseStudyPage />} />`.
+4. In `src/data/home.js`, set that project's `href` to `ROUTES.orbitCaseStudy` so its boarding pass opens the page.
 
 ## Postcard contact form (email setup)
 
@@ -66,11 +75,8 @@ The postcard at the bottom of the homepage sends messages by email through [Web3
 3. Restart `npm run dev`.
 4. When deploying to Vercel, add the same `VITE_WEB3FORMS_KEY` variable under Project → Settings → Environment Variables.
 
-Without a key, the Send button instead opens the visitor's email app addressed to `CONTACT_EMAIL` in `src/App.jsx` — replace the `hello@you.com` placeholder there with the real address.
+Without a key, the Send button instead opens the visitor's email app addressed to `CONTACT_EMAIL` in `src/data/site.js` — replace the `hello@you.com` placeholder there with the real address.
 
-## Notes for future development
+## Deployment notes
 
-- `src/App.jsx` started as the original artifact (the untouched version is in `reference/`). It's a self-contained component: the `Home` and `DeltaCaseStudy` pages, all supporting SVG illustrations (`Lily`, `HibiscusFlower`, `BeachScene`, `PlaneMark`), and all CSS (as a template literal injected via `<style>{CSS}</style>`).
-- To add new sections/pages, either extend `src/App.jsx` directly, or create new components under `src/components/` and import them in — Tailwind utility classes and Headless UI components are available for anything new you build.
-- Fonts (Fraunces, Space Mono, Work Sans) are loaded via `@import` inside the CSS template literal in `App.jsx` — no extra setup needed.
-- Nothing in this project has been deployed or pushed anywhere; it's set up for local development only. When you're ready, this is a standard Vite app and deploys to Vercel with zero configuration (`vercel.com/new` → import the GitHub repo).
+Nothing has been deployed or pushed anywhere yet. This is a standard Vite app and deploys to Vercel with zero configuration. `vercel.json` rewrites all paths to `index.html`, so case study URLs work when refreshed or shared directly.
