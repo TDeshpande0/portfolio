@@ -5,7 +5,7 @@ import { ArrowRight, ArrowLeft, Plane } from "lucide-react";
 /* Design tokens + all component CSS live here so the file is portable */
 /* ------------------------------------------------------------------ */
 const CSS = `
-@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=Space+Mono:wght@400;700&family=Work+Sans:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=Space+Mono:wght@400;700&family=Caveat:wght@500&family=Work+Sans:wght@400;500;600&display=swap");
 
 .tp {
   --kraft:#FFF6E3; --kraft-deep:#FFE49A; --ink:#123B36;
@@ -27,12 +27,16 @@ const CSS = `
 .tp nav .links a:hover{border-bottom-color:var(--airmail);color:var(--airmail);}
 .tp nav .back{border-bottom:1px solid var(--ink);}
 
-.tp .ticker{background:var(--ink);overflow:hidden;white-space:nowrap;border-bottom:3px solid var(--ink);}
-.tp .ticker div{display:inline-block;padding:9px 0;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:3px;color:var(--kraft);animation:tp-scroll 22s linear infinite;}
-.tp .ticker span{margin:0 28px;color:var(--gold);}
+.tp .ticker{background:var(--ink);overflow:hidden;border-bottom:3px solid var(--ink);}
+/* two identical groups, each wider than any screen, so a -50% slide loops seamlessly */
+.tp .ticker-track{display:flex;width:max-content;animation:tp-scroll 90s linear infinite;}
+.tp .ticker-group{display:flex;flex-shrink:0;min-width:100vw;justify-content:space-around;}
+.tp .ticker-item{padding:9px 0;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:3px;color:var(--kraft);white-space:nowrap;}
+.tp .ticker-item .plane{margin:0 28px;color:var(--gold);}
 @keyframes tp-scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 
-.tp .hero{position:relative;padding:100px 40px 170px;overflow:hidden;min-height:620px;}
+.tp .first-screen{display:flex;flex-direction:column;min-height:100vh;min-height:100svh;}
+.tp .hero{position:relative;padding:100px 40px 170px;overflow:hidden;flex:1;}
 /* ---- beach scene ---- */
 .tp .beach{position:absolute;inset:0;width:100%;height:100%;z-index:0;display:block;}
 .tp .bloom{position:absolute;z-index:5;filter:drop-shadow(0 6px 10px rgba(60,30,40,.28));}
@@ -47,7 +51,6 @@ const CSS = `
 
 .tp section{padding:64px 40px;max-width:1000px;margin:0 auto;}
 .tp .rule{border-top:3px solid var(--ink);max-width:1000px;margin:0 auto;}
-.tp .section-label{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:4px;color:var(--gold);margin-bottom:24px;text-transform:uppercase;}
 
 /* passport */
 .tp .passport{background:var(--paper);position:relative;border:1px solid rgba(0,0,0,.15);border-radius:3px;overflow:hidden;
@@ -91,22 +94,30 @@ const CSS = `
   font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-align:center;opacity:.9;z-index:3;}
 
 /* luggage tags */
-.tp .tags{display:flex;flex-wrap:wrap;gap:34px 30px;padding-top:20px;align-items:flex-start;}
-.tp .tag-unit{position:relative;padding-top:26px;}
-.tp .tag-unit .string{position:absolute;top:-2px;left:50%;transform:translateX(-50%);overflow:visible;z-index:0;}
-.tp .tag{width:96px;min-height:200px;background:var(--paper);border:1px solid rgba(0,0,0,.13);border-radius:6px;position:relative;
-  box-shadow:3px 8px 14px -6px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.6);
-  padding:34px 10px 14px;display:flex;flex-direction:column;align-items:center;z-index:1;}
-.tp .tag .flash{position:absolute;top:0;right:0;width:0;height:0;border-style:solid;border-width:0 26px 26px 0;border-color:transparent;border-radius:0 6px 0 0;}
-.tp .tag .hole{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:12px;height:12px;border-radius:50%;background:var(--kraft);border:2px solid var(--ink);z-index:2;}
-.tp .tag .code{font-family:'Fraunces',serif;font-size:26px;font-weight:700;line-height:1;}
-.tp .tag .dest{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:1.5px;color:var(--muted);margin-top:3px;text-align:center;text-transform:uppercase;}
-.tp .tag .divider{width:100%;border-top:1px dashed rgba(0,0,0,.15);margin:10px 0 8px;}
-.tp .tag .name{font-weight:500;font-size:13px;text-align:center;}
+.tp .tags{display:flex;flex-wrap:wrap;justify-content:center;gap:32px 20px;}
+.tp .tag-unit{position:relative;padding-top:48px;flex:0 0 calc((100% - 80px) / 5);transform-origin:50% 4px;}
+/* string loop: its lower end sits on the grommet centre (48px unit padding + 27px into the tag) */
+.tp .tag-unit .string{position:absolute;top:0;left:50%;margin-left:-22px;z-index:3;overflow:visible;}
+.tp .tag-shadow{position:relative;filter:drop-shadow(0 0 .6px rgba(18,59,54,.5)) drop-shadow(3px 10px 12px rgba(0,0,0,.18));}
+.tp .tag{position:relative;aspect-ratio:1/2;display:flex;flex-direction:column;background-color:var(--paper);
+  background-image:repeating-linear-gradient(2deg,transparent 0 5px,rgba(120,90,40,.025) 5px 6px);
+  clip-path:polygon(24% 0,76% 0,100% 12%,100% 100%,0 100%,0 12%);}
+.tp .tag .band{flex:0 0 64px;position:relative;}
+.tp .tag .band::after{content:'';position:absolute;left:0;right:0;bottom:0;height:5px;background:rgba(0,0,0,.12);}
+.tp .tag .grommet{position:absolute;top:16px;left:50%;margin-left:-11px;width:22px;height:22px;border-radius:50%;background:var(--kraft);
+  box-shadow:inset 0 2px 3px rgba(0,0,0,.35),0 0 0 4px #E9DDBB,0 0 0 5px rgba(0,0,0,.28),0 1px 0 5px rgba(255,255,255,.35);}
+.tp .tag-body{flex:1;display:flex;flex-direction:column;align-items:center;padding:14px 12px 12px;text-align:center;}
+.tp .tag .to{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
+.tp .tag .code{font-family:'Fraunces',serif;font-size:40px;font-weight:700;line-height:1;margin-top:2px;}
+.tp .tag .dest{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1.5px;color:var(--muted);margin-top:4px;text-transform:uppercase;}
+.tp .tag .divider{width:100%;border-top:1.5px dashed rgba(0,0,0,.18);margin:12px 0 10px;}
+.tp .tag .name{font-weight:600;font-size:14px;}
 .tp .tag .sub{font-family:'Space Mono',monospace;font-size:8px;color:var(--muted);letter-spacing:1px;margin-top:2px;}
-.tp .tag .bar{width:70%;height:20px;margin-top:auto;padding-top:12px;background-clip:content-box;
+.tp .tag .bar{width:78%;height:28px;margin-top:auto;
   background:repeating-linear-gradient(90deg,var(--ink) 0 1.5px,transparent 1.5px 3px,var(--ink) 3px 3.5px,transparent 3.5px 5.5px,var(--ink) 5.5px 6px,transparent 6px 8px);}
-.tp .tag .serial{font-family:'Space Mono',monospace;font-size:7px;color:var(--muted);letter-spacing:1px;margin-top:4px;}
+.tp .tag .stub{border-top:1.5px dashed rgba(0,0,0,.25);padding:8px 10px 10px;text-align:center;background:rgba(0,0,0,.03);}
+.tp .tag .serial{font-family:'Space Mono',monospace;font-size:8px;color:var(--muted);letter-spacing:1px;}
+.tp .tag-unit .sticker{position:absolute;bottom:34px;right:-12px;width:42px;height:42px;transform:rotate(12deg);}
 
 /* work / boarding passes */
 .tp .dark{background:var(--navy-deep);padding:74px 40px;}
@@ -135,15 +146,56 @@ const CSS = `
   background:repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 3px,var(--ink) 3px 5px,transparent 5px 8px,var(--ink) 8px 9px,transparent 9px 11px);}
 
 /* contact */
-.tp .contact{background:var(--paper);display:grid;grid-template-columns:1fr 1fr;box-shadow:0 20px 40px -24px rgba(0,0,0,.45);}
-.tp .contact .lines{padding:36px 40px;}
-.tp .contact .lines .l{border-bottom:1px solid rgba(0,0,0,.15);height:30px;}
-.tp .contact .stampblock{border-left:1px dashed rgba(0,0,0,.2);padding:36px 40px;display:flex;flex-direction:column;align-items:flex-end;justify-content:space-between;gap:24px;}
-.tp .bigstamp{width:70px;height:82px;border:2.5px solid var(--airmail);display:flex;align-items:center;justify-content:center;transform:rotate(-9deg);
-  font-family:'Space Mono',monospace;font-size:11px;color:var(--airmail);text-align:center;
-  -webkit-mask:radial-gradient(circle 4px at 5px 5px,transparent 4px,#000 4.1px) -5px -5px/14px 14px repeat;
-  mask:radial-gradient(circle 4px at 5px 5px,transparent 4px,#000 4.1px) -5px -5px/14px 14px repeat;}
-.tp .cta{font-family:'Fraunces',serif;font-style:italic;font-size:20px;color:var(--ink);text-decoration:none;border-bottom:2px solid var(--airmail);}
+.tp .postcard{--pen:#23449A;position:relative;aspect-ratio:3/2;display:flex;flex-direction:column;padding:26px 34px 28px;border-radius:3px;transform:rotate(-.6deg);
+  background-color:#FBF6EA;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .4 0 0 0 0 .3 0 0 0 0 .15 0 0 0 .09 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"),
+    radial-gradient(ellipse at 85% 110%,rgba(160,120,50,.10),transparent 55%),radial-gradient(ellipse at 0 0,rgba(160,120,50,.07),transparent 45%);
+  box-shadow:0 1px 1px rgba(0,0,0,.08),0 12px 22px -10px rgba(0,0,0,.22),0 34px 56px -32px rgba(0,0,0,.4);}
+.tp .pc-head{text-align:center;font-family:'Fraunces',serif;font-weight:700;font-size:22px;letter-spacing:12px;padding-left:12px;margin-bottom:14px;}
+.tp .pc-grid{flex:1;display:grid;grid-template-columns:1fr auto 1fr;gap:0 30px;min-height:0;}
+.tp .pc-k{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;flex-shrink:0;}
+.tp .pc-left{position:relative;display:flex;flex-direction:column;gap:6px;min-height:0;}
+.tp .pc-msg{flex:1;width:100%;min-height:204px;resize:none;border:0;outline:none;padding:0 4px;color:var(--pen);
+  font-family:'Caveat',cursive;font-size:25px;line-height:34px;
+  background:linear-gradient(transparent 33px,rgba(18,59,54,.24) 33px) 0 0/100% 34px local;}
+.tp .pc-msg::placeholder{color:rgba(35,68,154,.38);}
+.tp .pc-msg:focus-visible{background-color:rgba(255,197,61,.08);}
+.tp .pc-divider{width:1.5px;background:rgba(18,59,54,.4);position:relative;display:flex;align-items:center;justify-content:center;}
+.tp .pc-divider span{writing-mode:vertical-rl;transform:rotate(180deg);background:#FBF6EA;padding:10px 0;white-space:nowrap;
+  font-family:'Space Mono',monospace;font-size:8px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;}
+.tp .pc-right{display:flex;flex-direction:column;min-width:0;}
+.tp .pc-stamps{position:relative;height:124px;flex-shrink:0;}
+.tp .pc-stamp{position:absolute;top:0;right:0;width:88px;height:104px;padding:4px;background:var(--paper);transform:rotate(3deg);
+  -webkit-mask:radial-gradient(circle at 4px 4px,transparent 2.8px,#000 3.2px) -4px -4px/8px 8px,linear-gradient(#000 0 0) content-box;
+  mask:radial-gradient(circle at 4px 4px,transparent 2.8px,#000 3.2px) -4px -4px/8px 8px,linear-gradient(#000 0 0) content-box;}
+.tp .pc-stamp-inner{position:relative;height:calc(100% - 6px);margin:3px;overflow:hidden;background:linear-gradient(180deg,var(--lav) 0%,#FF9C8A 55%,var(--gold) 100%);}
+.tp .pc-stamp-inner .val{position:absolute;top:4px;left:6px;font-family:'Fraunces',serif;font-weight:700;font-size:18px;color:var(--paper);line-height:1;}
+.tp .pc-stamp-inner .air{position:absolute;bottom:4px;left:0;right:0;text-align:center;font-family:'Space Mono',monospace;font-size:7px;letter-spacing:1.5px;color:var(--ink);font-weight:700;}
+.tp .pc-postmark{position:absolute;top:22px;right:46px;width:190px;height:86px;color:var(--ink);opacity:.5;mix-blend-mode:multiply;pointer-events:none;}
+.tp .pc-parvion{position:absolute;top:8px;left:0;display:flex;border:1.5px solid var(--navy-deep);font-family:'Space Mono',monospace;font-size:8px;letter-spacing:1.5px;font-weight:700;text-transform:uppercase;}
+.tp .pc-parvion span{padding:3px 6px;}
+.tp .pc-parvion span:first-child{background:var(--navy-deep);color:var(--paper);}
+.tp .pc-parvion span:last-child{color:var(--navy-deep);}
+.tp .pc-address{margin-top:auto;display:flex;flex-direction:column;}
+.tp .pc-line{display:flex;align-items:baseline;gap:10px;min-height:42px;padding-top:8px;border-bottom:1.5px solid rgba(18,59,54,.4);transition:border-color .2s;}
+.tp .pc-line:focus-within{border-bottom-color:var(--airmail);}
+.tp .pc-line input{flex:1;min-width:0;border:0;outline:none;background:transparent;color:var(--pen);font-family:'Caveat',cursive;font-size:25px;line-height:1.2;}
+.tp .pc-line input::placeholder{color:rgba(35,68,154,.38);}
+.tp .pc-to{font-family:'Fraunces',serif;font-weight:600;font-size:18px;}
+.tp .pc-foot{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:18px;}
+.tp .pc-note{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.5px;color:var(--muted);line-height:1.5;}
+.tp .pc-note.err{color:#C7362C;}
+.tp .pc-send{flex-shrink:0;display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border:2px solid var(--airmail);border-radius:999px;color:var(--airmail);
+  font-family:'Space Mono',monospace;font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;transform:rotate(-2deg);
+  transition:background .2s,color .2s,transform .2s;}
+.tp .pc-send:hover:not(:disabled){background:var(--airmail);color:var(--paper);transform:rotate(0);}
+.tp .pc-send:focus-visible{outline:2px solid var(--gold);outline-offset:3px;}
+.tp .pc-send:disabled{opacity:.6;cursor:progress;}
+.tp .pc-sent{position:absolute;top:42%;left:50%;padding:10px 20px;border:4px double var(--airmail);border-radius:8px;color:var(--airmail);
+  font-family:'Space Mono',monospace;font-weight:700;font-size:20px;letter-spacing:5px;text-align:center;line-height:1.3;text-transform:uppercase;
+  transform:translate(-50%,-50%) rotate(-14deg);opacity:.85;mix-blend-mode:multiply;pointer-events:none;animation:tp-thunk .35s cubic-bezier(.3,1.6,.5,1) both;}
+.tp .pc-sent small{display:block;font-size:9px;letter-spacing:2px;}
+@keyframes tp-thunk{from{transform:translate(-50%,-50%) rotate(-14deg) scale(1.8);opacity:0;}}
 
 .tp footer{text-align:center;padding:34px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1px;color:var(--muted);background:var(--kraft-deep);}
 
@@ -204,7 +256,7 @@ const CSS = `
 .tp .quote{background:var(--navy-deep);color:var(--paper);border-radius:10px;padding:30px 34px;font-size:16px;line-height:1.7;}
 
 @media(max-width:820px){
-  .tp .hero{min-height:520px;padding:64px 20px 130px;}
+  .tp .hero{padding:64px 20px 130px;}
   .tp .scrim{background:linear-gradient(180deg,rgba(255,251,242,.95) 0%,rgba(255,251,242,.88) 46%,rgba(255,251,242,.3) 72%,rgba(255,251,242,0) 90%);}
   .tp .pp-body{grid-template-columns:1fr;}
   .tp .photo-side{border-left:none;border-top:1px solid rgba(0,0,0,.09);}
@@ -212,18 +264,36 @@ const CSS = `
   .tp .bpass .notch,.tp .bpass .seam{display:none;}
   .tp .bpass .main{border-radius:6px 6px 0 0;}
   .tp .bpass .stub{border-radius:0 0 6px 6px;flex-direction:row;align-items:center;}
-  .tp .contact,.tp .grid2,.tp .ovpass{grid-template-columns:1fr;}
-  .tp .contact .stampblock{border-left:none;border-top:1px dashed rgba(0,0,0,.2);align-items:flex-start;}
+  .tp .grid2,.tp .ovpass{grid-template-columns:1fr;}
+  .tp .tag-unit{flex-basis:calc((100% - 40px) / 3);}
+  .tp .postcard{aspect-ratio:auto;padding:22px 20px 24px;transform:none;}
+  .tp .pc-head{font-size:18px;letter-spacing:8px;padding-left:8px;}
+  .tp .pc-grid{grid-template-columns:1fr;gap:18px;}
+  .tp .pc-divider{width:auto;height:1.5px;}
+  .tp .pc-divider span{writing-mode:horizontal-tb;transform:none;padding:0 10px;}
+  .tp .pc-address{margin-top:0;}
+  .tp .pc-foot{flex-direction:column-reverse;align-items:flex-end;}
+  .tp .pc-note{align-self:stretch;}
   .tp .ovpass .stub{border-left:none;border-top:2px dashed rgba(0,0,0,.2);flex-direction:row;}
   .tp .hero,.tp section,.tp .dark,.tp .cs-hero{padding-left:20px;padding-right:20px;}
 }
+@media(max-width:520px){
+  .tp .tag-unit{flex-basis:calc((100% - 20px) / 2);}
+}
 @media(prefers-reduced-motion:reduce){
   .tp *,.tp *::before,.tp *::after{animation-duration:.01ms !important;transition-duration:.01ms !important;}
+  .tp .ticker-track{animation:none;}
 }
 `;
 
 /* ------------------------------- data ------------------------------- */
 const DESTINATIONS = ["Costa Rica", "Czech Republic", "India", "Puerto Rico", "New York", "California"];
+// one set is ~1000px wide; 4 sets per group keeps the loop gapless on wide screens
+const TICKER_REPEAT = 4;
+
+// Replace with Tanvi's real address. Used for the mailto: fallback when no Web3Forms key is set.
+const CONTACT_EMAIL = "hello@you.com";
+const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY;
 
 const PASSPORT_FIELDS = [
   ["Surname", "Deshpande"],
@@ -520,24 +590,30 @@ function BeachScene() {
 function LuggageTag({ code, dest, name, flash, serial, tilt }) {
   return (
     <div className="tag-unit" style={{ transform: `rotate(${tilt}deg)` }}>
-      <svg className="string" width="70" height="20" viewBox="0 0 70 20" aria-hidden="true">
-        <path d="M10 20 C 10 2, 60 2, 60 20" stroke="#123B36" strokeWidth="1.5" fill="none" />
-      </svg>
-      <div className="tag">
-        <span className="flash" style={{ borderRightColor: flash }} />
-        <span className="hole" />
-        <div className="code">{code}</div>
-        <div className="dest">{dest}</div>
-        <div className="divider" />
-        <div className="name">{name}</div>
-        <div className="sub">skill · carry-on</div>
-        <div className="bar" />
-        <div className="serial">{serial}</div>
-        <HibiscusFlower
-          uid={`tag-${code}`}
-          style={{ position: "absolute", bottom: 4, right: -10, width: 34, height: 34, transform: "rotate(12deg)" }}
-        />
+      <div className="tag-shadow">
+        <div className="tag">
+          <div className="band" style={{ background: flash }}>
+            <span className="grommet" />
+          </div>
+          <div className="tag-body">
+            <div className="to">to</div>
+            <div className="code">{code}</div>
+            <div className="dest">{dest}</div>
+            <div className="divider" />
+            <div className="name">{name}</div>
+            <div className="sub">skill · carry-on</div>
+            <div className="bar" />
+          </div>
+          <div className="stub">
+            <div className="serial">{serial}</div>
+          </div>
+        </div>
+        <HibiscusFlower uid={`tag-${code}`} className="sticker" />
       </div>
+      <svg className="string" width="44" height="78" viewBox="0 0 44 78" aria-hidden="true">
+        <path d="M22 75 C9 58 7 24 22 4 C37 24 35 58 22 75" stroke="#123B36" strokeWidth="1.6" fill="none" strokeLinecap="round" />
+        <circle cx="22" cy="5" r="2.4" fill="#123B36" />
+      </svg>
     </div>
   );
 }
@@ -595,7 +671,7 @@ function PassportPage() {
     <div className="passport">
       <span className="perf" />
       <div className="pp-head">
-        <div className="country">DESIGN REPUBLIC</div>
+        <div className="country">ABOUT ME</div>
         <div className="doctype">
           <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
             <g fill="none" stroke="#FFC53D" strokeWidth="1.3">
@@ -656,56 +732,180 @@ function PassportPage() {
   );
 }
 
-/* ------------------------------- pages ------------------------------ */
-function Home({ go }) {
-  const row = [...DESTINATIONS, ...DESTINATIONS];
-  return (
-    <>
-      <nav>
-        <div className="mark">NO. 000—DESIGNER</div>
-        <div className="links">
-          <a href="#about">about</a><a href="#work">work</a><a href="#contact">contact</a>
-        </div>
-      </nav>
+function Postcard() {
+  const [message, setMessage] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState("idle");
 
-      <div className="ticker">
-        <div>
-          {row.map((d, i) => (
-            <span key={i} style={{ margin: 0 }}>
-              <span>✈</span>{d}
-            </span>
-          ))}
+  const edit = (setter) => (e) => {
+    setter(e.target.value);
+    if (status === "sent" || status === "error") setStatus("idle");
+  };
+
+  const send = async (e) => {
+    e.preventDefault();
+    const subject = `Postcard from ${name.trim() || "a portfolio visitor"}`;
+
+    if (!WEB3FORMS_KEY) {
+      const body = `${message}\n\n— ${name.trim() || "A portfolio visitor"} (${email})`;
+      window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      return;
+    }
+
+    setStatus("sending");
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject,
+          from_name: name.trim() || "Portfolio visitor",
+          email,
+          message,
+          botcheck: e.currentTarget.botcheck.checked,
+        }),
+      });
+      const data = await res.json();
+      if (!data.success) throw new Error(data.message);
+      setStatus("sent");
+      setMessage("");
+    } catch {
+      setStatus("error");
+    }
+  };
+
+  const note = {
+    idle: "write on the lines, then drop it in the mailbox.",
+    sending: "stamping & sorting…",
+    sent: "postmarked! Tanvi will write back soon.",
+    error: `the mail truck broke down. try again, or email ${CONTACT_EMAIL}.`,
+  }[status];
+
+  return (
+    <form className="postcard" onSubmit={send}>
+      <div className="pc-head" aria-hidden="true">POST CARD</div>
+      <div className="pc-grid">
+        <div className="pc-left">
+          <label className="pc-k" htmlFor="pc-msg">correspondence</label>
+          <textarea
+            id="pc-msg" name="message" className="pc-msg" required maxLength={3000}
+            placeholder="Wish you were here…"
+            value={message} onChange={edit(setMessage)}
+          />
+          {status === "sent" && (
+            <div className="pc-sent" aria-hidden="true">sent<small>via air mail</small></div>
+          )}
+        </div>
+
+        <div className="pc-divider" aria-hidden="true"><span>par avion · by air mail</span></div>
+
+        <div className="pc-right">
+          <div className="pc-stamps" aria-hidden="true">
+            <div className="pc-parvion"><span>par avion</span><span>air mail</span></div>
+            <div className="pc-stamp">
+              <div className="pc-stamp-inner">
+                <span className="val">55</span>
+                <HibiscusFlower uid="pc-stamp" style={{ position: "absolute", top: 14, left: 8, width: 60, height: 60 }} />
+                <span className="air">AIR MAIL</span>
+              </div>
+            </div>
+            <svg className="pc-postmark" viewBox="0 0 190 86">
+              <g fill="none" stroke="currentColor" strokeWidth="2">
+                {[22, 34, 46, 58].map((y) => (
+                  <path key={y} d={`M0 ${y} q12 -6 24 0 t24 0 t24 0 t24 0 t14 0`} />
+                ))}
+                <circle cx="148" cy="42" r="36" />
+                <circle cx="148" cy="42" r="30" strokeWidth="1" />
+              </g>
+              <text x="148" y="39" textAnchor="middle" fontSize="9" fontFamily="Space Mono, monospace" fill="currentColor" letterSpacing="1">TANVI · D</text>
+              <text x="148" y="53" textAnchor="middle" fontSize="11" fontFamily="Space Mono, monospace" fontWeight="700" fill="currentColor">2026</text>
+            </svg>
+          </div>
+
+          <div className="pc-address">
+            <div className="pc-line">
+              <span className="pc-k">to</span>
+              <span className="pc-to">Tanvi Deshpande</span>
+            </div>
+            <label className="pc-line">
+              <span className="pc-k">from</span>
+              <input name="name" autoComplete="name" placeholder="your name" value={name} onChange={edit(setName)} />
+            </label>
+            <label className="pc-line">
+              <span className="pc-k">email</span>
+              <input name="email" type="email" required autoComplete="email" placeholder="so I can write back" value={email} onChange={edit(setEmail)} />
+            </label>
+            <input type="checkbox" name="botcheck" tabIndex={-1} autoComplete="off" style={{ display: "none" }} />
+          </div>
+
+          <div className="pc-foot">
+            <p className={`pc-note${status === "error" ? " err" : ""}`} role="status" aria-live="polite">{note}</p>
+            <button className="pc-send" type="submit" disabled={status === "sending"}>
+              {status === "sending" ? "sending" : status === "sent" ? "sent ✓" : <>send <Plane size={14} aria-hidden="true" /></>}
+            </button>
+          </div>
         </div>
       </div>
+    </form>
+  );
+}
 
-      <header className="hero">
-        <BeachScene />
+/* ------------------------------- pages ------------------------------ */
+function Home({ go }) {
+  const row = Array.from({ length: TICKER_REPEAT }, () => DESTINATIONS).flat();
+  return (
+    <>
+      <div className="first-screen">
+        <nav>
+          <div className="mark">NO. 000—DESIGNER</div>
+          <div className="links">
+            <a href="#about">about</a><a href="#work">work</a><a href="#contact">contact</a>
+          </div>
+        </nav>
 
-        <Lily uid="heroB" className="bloom" style={{ bottom: 96, left: 36, width: 168, height: 168 }} />
-        <HibiscusFlower uid="heroA" className="bloom" style={{ bottom: 52, left: 12, width: 104, height: 104 }} />
-        <HibiscusFlower uid="heroC" className="bloom" style={{ bottom: 68, left: 168, width: 74, height: 74, opacity: 0.96 }} />
-        <div className="scrim" />
-
-        <div className="hero-inner">
-          <div className="eyebrow">aspiring product designer</div>
-          <h1>Tanvi<br />Deshpande</h1>
-          <p className="sub">
-            I keep every boarding pass, every photo strip, every stamp in my
-            passport. My desk drawer never stood a chance, and neither did this
-            website.
-          </p>
+        <div className="ticker">
+          <div className="ticker-track">
+            {[0, 1].map((g) => (
+              <div className="ticker-group" key={g} aria-hidden={g === 1 || undefined}>
+                {row.map((d, i) => (
+                  <span className="ticker-item" key={i}>
+                    <span className="plane">✈</span>{d}
+                  </span>
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
-      </header>
+
+        <header className="hero">
+          <BeachScene />
+
+          <Lily uid="heroB" className="bloom" style={{ bottom: 96, left: 36, width: 168, height: 168 }} />
+          <HibiscusFlower uid="heroA" className="bloom" style={{ bottom: 52, left: 12, width: 104, height: 104 }} />
+          <HibiscusFlower uid="heroC" className="bloom" style={{ bottom: 68, left: 168, width: 74, height: 74, opacity: 0.96 }} />
+          <div className="scrim" />
+
+          <div className="hero-inner">
+            <div className="eyebrow">aspiring product designer</div>
+            <h1>Tanvi<br />Deshpande</h1>
+            <p className="sub">
+              I keep every boarding pass, every photo strip, every stamp in my
+              passport. My desk drawer never stood a chance, and neither did this
+              website.
+            </p>
+          </div>
+        </header>
+      </div>
 
       <div className="rule" />
 
-      <section id="about">
-        <div className="section-label">bio · data page</div>
+      <section id="about" aria-label="About me">
         <PassportPage />
       </section>
 
-      <section>
-        <div className="section-label">cargo · skills</div>
+      <section aria-label="Skills">
         <div className="tags">
           {TAGS.map((t) => <LuggageTag key={t.code} {...t} />)}
         </div>
@@ -713,7 +913,6 @@ function Home({ go }) {
 
       <div className="dark" id="work">
         <div className="inner">
-          <div className="section-label">boarding passes · work</div>
           <h2>Every project, a route flown.</h2>
           <div className="bpasses">
             {PROJECTS.map((p) => (
@@ -726,17 +925,8 @@ function Home({ go }) {
         </div>
       </div>
 
-      <section id="contact">
-        <div className="section-label">send a postcard</div>
-        <div className="contact">
-          <div className="lines">
-            {[0, 1, 2, 3].map((i) => <div className="l" key={i} />)}
-          </div>
-          <div className="stampblock">
-            <div className="bigstamp">AIR<br />MAIL</div>
-            <a className="cta" href="mailto:hello@you.com">say hello →</a>
-          </div>
-        </div>
+      <section id="contact" aria-label="Send a postcard">
+        <Postcard />
       </section>
 
       <footer>issued for portfolio use only · not valid for travel</footer>

@@ -57,9 +57,20 @@ Preview the production build locally:
 npm run preview
 ```
 
+## Postcard contact form (email setup)
+
+The postcard at the bottom of the homepage sends messages by email through [Web3Forms](https://web3forms.com) (free, no backend needed).
+
+1. Go to web3forms.com, enter the inbox that should receive postcards, and copy the access key they email you.
+2. Copy `.env.example` to `.env.local` and paste the key: `VITE_WEB3FORMS_KEY=your-key`
+3. Restart `npm run dev`.
+4. When deploying to Vercel, add the same `VITE_WEB3FORMS_KEY` variable under Project → Settings → Environment Variables.
+
+Without a key, the Send button instead opens the visitor's email app addressed to `CONTACT_EMAIL` in `src/App.jsx` — replace the `hello@you.com` placeholder there with the real address.
+
 ## Notes for future development
 
-- `src/App.jsx` is the original artifact content, unchanged. It's a self-contained component: the `Home` and `DeltaCaseStudy` pages, all supporting SVG illustrations (`Lily`, `HibiscusFlower`, `BeachScene`, `PlaneMark`), and all CSS (as a template literal injected via `<style>{CSS}</style>`).
+- `src/App.jsx` started as the original artifact (the untouched version is in `reference/`). It's a self-contained component: the `Home` and `DeltaCaseStudy` pages, all supporting SVG illustrations (`Lily`, `HibiscusFlower`, `BeachScene`, `PlaneMark`), and all CSS (as a template literal injected via `<style>{CSS}</style>`).
 - To add new sections/pages, either extend `src/App.jsx` directly, or create new components under `src/components/` and import them in — Tailwind utility classes and Headless UI components are available for anything new you build.
 - Fonts (Fraunces, Space Mono, Work Sans) are loaded via `@import` inside the CSS template literal in `App.jsx` — no extra setup needed.
 - Nothing in this project has been deployed or pushed anywhere; it's set up for local development only. When you're ready, this is a standard Vite app and deploys to Vercel with zero configuration (`vercel.com/new` → import the GitHub repo).
