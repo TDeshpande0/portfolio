@@ -4,16 +4,18 @@ import Postcard from "../../components/home/Postcard";
 import SkillTags from "../../components/home/SkillTags";
 import Ticker from "../../components/home/Ticker";
 import WorkSection from "../../components/home/WorkSection";
+import Section from "../../components/layout/Section";
+import SiteFooter from "../../components/layout/SiteFooter";
 import SiteNav from "../../components/layout/SiteNav";
 import {
   DESTINATIONS,
   HERO,
+  NAV_LINKS,
   PASSPORT_FIELDS,
   PROJECTS,
   SKILL_TAGS,
 } from "../../data/home";
 import { useDocumentTitle } from "../../hooks/useDocumentTitle";
-import "./HomePage.css";
 
 export default function HomePage() {
   useDocumentTitle("Tanvi Deshpande — Product Designer");
@@ -21,36 +23,34 @@ export default function HomePage() {
   return (
     <>
       {/* nav + ticker + hero fill exactly one screen */}
-      <div className="first-screen">
-        <SiteNav mark="TANVI DESHPANDE">
-          <div className="links">
-            <a href="#about">about</a>
-            <a href="#work">work</a>
-            <a href="#contact">contact</a>
-          </div>
-        </SiteNav>
+      <div className="flex min-h-screen flex-col supports-[height:100svh]:min-h-svh">
+        <SiteNav mark="TANVI DESHPANDE" links={NAV_LINKS} />
         <Ticker destinations={DESTINATIONS} />
         <Hero {...HERO} />
       </div>
 
-      <div className="rule" />
+      <div className="mx-auto max-w-[1000px] border-t-[3px] border-ink" />
 
-      <section id="about" aria-label="About me">
+      <Section id="about" aria-label="About me">
         <Passport fields={PASSPORT_FIELDS} />
-      </section>
+      </Section>
 
-      <section>
-        <h2 className="sec-head">Every skill, packed &amp; ready.</h2>
+      <Section>
+        <h2 className="mb-7 max-w-[20ch] font-fraunces text-[36px] font-medium italic text-ink">
+          Every skill, packed &amp; ready.
+        </h2>
         <SkillTags tags={SKILL_TAGS} />
-      </section>
+      </Section>
 
       <WorkSection projects={PROJECTS} />
 
-      <section id="contact" aria-label="Send a postcard">
+      <Section id="contact" aria-label="Send a postcard">
         <Postcard />
-      </section>
+      </Section>
 
-      <footer>issued for portfolio use only · not valid for travel</footer>
+      <SiteFooter>
+        issued for portfolio use only · not valid for travel
+      </SiteFooter>
     </>
   );
 }

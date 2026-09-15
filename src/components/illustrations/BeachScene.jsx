@@ -1,7 +1,7 @@
-export default function BeachScene() {
+export default function BeachScene({ className }) {
   return (
     <svg
-      className="beach"
+      className={className}
       viewBox="0 0 1200 560"
       preserveAspectRatio="xMidYMax slice"
       aria-hidden="true"

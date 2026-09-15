@@ -1,4 +1,3 @@
-import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import CaseStudyHero from "../../../components/case-study/CaseStudyHero";
 import CaseStudySection from "../../../components/case-study/CaseStudySection";
@@ -6,6 +5,7 @@ import ComparisonTable from "../../../components/case-study/ComparisonTable";
 import Figure from "../../../components/case-study/Figure";
 import InfoCard from "../../../components/case-study/InfoCard";
 import PhaseRoute from "../../../components/case-study/PhaseRoute";
+import SiteFooter from "../../../components/layout/SiteFooter";
 import SiteNav from "../../../components/layout/SiteNav";
 import { useDocumentTitle } from "../../../hooks/useDocumentTitle";
 import { ROUTES } from "../../../routes";
@@ -13,16 +13,18 @@ import { COMPARISON_COLUMNS, COMPARISON_ROWS, META, PHASES } from "./content";
 
 const BACK_TO_WORK = `${ROUTES.home}#work`;
 
+const TWO_COLUMNS = "grid grid-cols-1 gap-5 md:grid-cols-2";
+const SUBHEAD = "mb-[14px] text-[15px] font-semibold";
+
 export default function DeltaCaseStudyPage() {
   useDocumentTitle("Delta Airlines Re‑Design — Tanvi Deshpande");
 
   return (
     <>
-      <SiteNav mark="CASE STUDY · 01">
-        <Link className="back" to={BACK_TO_WORK}>
-          <ArrowLeft size={14} aria-hidden="true" /> back to work
-        </Link>
-      </SiteNav>
+      <SiteNav
+        mark="CASE STUDY · 01"
+        back={{ to: BACK_TO_WORK, label: "back to work" }}
+      />
 
       <CaseStudyHero
         label="product design · airline booking"
@@ -34,7 +36,7 @@ export default function DeltaCaseStudyPage() {
       <PhaseRoute phases={PHASES} />
 
       <CaseStudySection label="overview">
-        <p style={{ maxWidth: "70ch", color: "var(--muted)", fontSize: 15 }}>
+        <p className="max-w-[70ch] text-[15px] text-muted">
           Delta’s online booking experience overwhelms first-time flyers — long
           forms, confusing seat selection, and buried accessibility options.
           This project rebuilds the flight-booking flow into something faster,
@@ -46,7 +48,7 @@ export default function DeltaCaseStudyPage() {
         label="01 · empathize"
         title="Understanding the traveler."
       >
-        <div className="grid2" style={{ marginBottom: 30 }}>
+        <div className={`${TWO_COLUMNS} mb-[30px]`}>
           <InfoCard
             title="Research goals"
             items={[
@@ -65,15 +67,11 @@ export default function DeltaCaseStudyPage() {
           />
         </div>
 
-        <h4 style={{ marginBottom: 14, fontSize: 15, fontWeight: 600 }}>
-          Competitive analysis
-        </h4>
+        <h4 className={SUBHEAD}>Competitive analysis</h4>
         <ComparisonTable columns={COMPARISON_COLUMNS} rows={COMPARISON_ROWS} />
 
-        <h4 style={{ margin: "34px 0 14px", fontSize: 15, fontWeight: 600 }}>
-          User personas
-        </h4>
-        <div className="grid2">
+        <h4 className={`${SUBHEAD} mt-[34px]`}>User personas</h4>
+        <div className={TWO_COLUMNS}>
           <Figure
             tab="passport · persona 01"
             note="Aisha — the environmentally conscious professional"
@@ -89,13 +87,13 @@ export default function DeltaCaseStudyPage() {
         label="02 · define"
         title="Turning research into a problem."
       >
-        <div className="quote" style={{ marginBottom: 30 }}>
+        <div className="mb-[30px] rounded-[10px] bg-navy-deep px-[34px] py-[30px] text-[16px] leading-[1.7] text-paper">
           The flight booking experience is hindered by hidden fees, inefficient
           processes, and poor accessibility, leading to user frustration and
           mistrust. Travelers needing special assistance face significant
           barriers.
         </div>
-        <div className="grid2">
+        <div className={TWO_COLUMNS}>
           <InfoCard
             title="User needs"
             items={[
@@ -116,7 +114,7 @@ export default function DeltaCaseStudyPage() {
       </CaseStudySection>
 
       <CaseStudySection label="03 · ideate" title="Structuring the new flow.">
-        <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+        <div className="flex flex-col gap-6">
           <Figure tab="site map" note="Information architecture" />
           <Figure tab="user flow · legend included" note="User flow diagram" />
           <Figure
@@ -128,11 +126,11 @@ export default function DeltaCaseStudyPage() {
       </CaseStudySection>
 
       <CaseStudySection label="04 · prototype" title="Building the system.">
-        <div className="grid2" style={{ marginBottom: 20 }}>
+        <div className={`${TWO_COLUMNS} mb-5`}>
           <Figure tab="typography" note="PT Serif · Fira Sans specimen" />
           <Figure tab="buttons · tags · overlay" note="UI component library" />
         </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+        <div className="flex flex-col gap-5">
           <Figure
             tab="special assistance seating card"
             note="Special assistance card"
@@ -150,14 +148,14 @@ export default function DeltaCaseStudyPage() {
         label="05 · test"
         title="Validating with real travelers."
       >
-        <InfoCard title="Usability test plan" style={{ marginBottom: 30 }}>
-          <p style={{ color: "var(--muted)", fontSize: 14 }}>
+        <InfoCard title="Usability test plan" className="mb-[30px]">
+          <p className="text-[14px] text-muted">
             Participants completed tasks covering flight search, seat selection,
             special assistance requests, and the SAF option, with a focus on
             inclusivity and accessibility.
           </p>
         </InfoCard>
-        <div className="grid2">
+        <div className={TWO_COLUMNS}>
           <InfoCard
             title="Key observations"
             items={[
@@ -177,11 +175,11 @@ export default function DeltaCaseStudyPage() {
         </div>
       </CaseStudySection>
 
-      <footer>
-        <Link to={BACK_TO_WORK} style={{ textDecoration: "underline" }}>
+      <SiteFooter>
+        <Link to={BACK_TO_WORK} className="underline">
           back to all projects
         </Link>
-      </footer>
+      </SiteFooter>
     </>
   );
 }

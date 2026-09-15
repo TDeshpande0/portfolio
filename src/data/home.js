@@ -2,6 +2,12 @@ import { ROUTES } from "../routes";
 
 // Editable homepage content. Components read everything from here.
 
+export const NAV_LINKS = [
+  { label: "about", href: "#about" },
+  { label: "work", href: "#work" },
+  { label: "contact", href: "#contact" },
+];
+
 export const HERO = {
   firstName: "Tanvi",
   lastName: "Deshpande",

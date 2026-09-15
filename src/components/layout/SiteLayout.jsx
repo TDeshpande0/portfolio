@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import FlightProvider from "./FlightProvider";
 
-// Wraps every page: the .tp style root, the plane transition, and scroll handling.
+// Wraps every page: base colours and type, the plane transition, and scroll handling.
 export default function SiteLayout() {
   const { pathname, hash } = useLocation();
 
@@ -12,7 +12,7 @@ export default function SiteLayout() {
   }, [pathname, hash]);
 
   return (
-    <div className="tp">
+    <div className="overflow-x-hidden bg-kraft font-sans leading-[1.6] text-ink">
       <FlightProvider>
         <Outlet />
       </FlightProvider>

@@ -1,6 +1,7 @@
 import { SWING, usePendulum } from "../../hooks/usePendulum";
 import HibiscusFlower from "../illustrations/HibiscusFlower";
-import "./LuggageTag.css";
+
+const SMALL_CAPS = "font-mono uppercase text-muted";
 
 export default function LuggageTag({
   code,
@@ -28,36 +29,56 @@ export default function LuggageTag({
   };
 
   return (
+    // 5 per row on desktop, 3 on tablets, 2 on phones. Rotates around the string knot (4px from the top).
     <div
       ref={ref}
-      className="tag-unit"
+      className="relative flex-[0_0_calc((100%-20px)/2)] origin-[50%_4px] pt-12 sm:basis-[calc((100%-40px)/3)] md:basis-[calc((100%-80px)/5)]"
       style={{ transform: `rotate(${tilt}deg)` }}
       onPointerEnter={onPointerEnter}
       onPointerDown={onPointerDown}
     >
-      <div className="tag-shadow">
-        <div className="tag">
-          <div className="band" style={{ background: flash }}>
-            <span className="grommet" />
+      <div className="relative [filter:drop-shadow(0_0_.6px_rgba(18,59,54,.5))_drop-shadow(3px_10px_12px_rgba(0,0,0,.18))]">
+        <div className="tag-shape relative flex aspect-[1/2] flex-col bg-paper">
+          {/* coloured band with the reinforced string hole */}
+          <div
+            className="relative flex-[0_0_64px] after:absolute after:inset-x-0 after:bottom-0 after:h-[5px] after:bg-black/[.12] after:content-['']"
+            style={{ background: flash }}
+          >
+            <span className="absolute left-1/2 top-4 -ml-[11px] h-[22px] w-[22px] rounded-full bg-kraft shadow-[inset_0_2px_3px_rgba(0,0,0,.35),0_0_0_4px_#E9DDBB,0_0_0_5px_rgba(0,0,0,.28),0_1px_0_5px_rgba(255,255,255,.35)]" />
           </div>
-          <div className="tag-body">
-            <div className="to">to</div>
-            <div className="code">{code}</div>
-            <div className="dest">{dest}</div>
-            <div className="divider" />
-            <div className="name">{name}</div>
-            <div className="sub">skill · carry-on</div>
-            <div className="bar" />
+
+          <div className="flex flex-1 flex-col items-center px-3 pb-3 pt-[14px] text-center">
+            <div className={`${SMALL_CAPS} text-[8px] tracking-[2px]`}>to</div>
+            <div className="mt-[2px] font-fraunces text-[40px] font-bold leading-none">
+              {code}
+            </div>
+            <div className={`${SMALL_CAPS} mt-1 text-[9px] tracking-[1.5px]`}>
+              {dest}
+            </div>
+            <div className="mb-[10px] mt-3 w-full border-t-[1.5px] border-dashed border-black/[.18]" />
+            <div className="text-[14px] font-semibold">{name}</div>
+            <div className="mt-[2px] font-mono text-[8px] tracking-[1px] text-muted">
+              skill · carry-on
+            </div>
+            <div className="barcode-thin mt-auto h-7 w-[78%]" />
           </div>
-          <div className="stub">
-            <div className="serial">{serial}</div>
+
+          {/* tear-off stub */}
+          <div className="border-t-[1.5px] border-dashed border-black/25 bg-black/[.03] px-[10px] pb-[10px] pt-2 text-center">
+            <div className="font-mono text-[8px] tracking-[1px] text-muted">
+              {serial}
+            </div>
           </div>
         </div>
-        <HibiscusFlower uid={`tag-${code}`} className="sticker" />
+        <HibiscusFlower
+          uid={`tag-${code}`}
+          className="absolute bottom-[34px] right-[-12px] h-[42px] w-[42px] rotate-[12deg]"
+        />
       </div>
 
+      {/* string loop: its lower end sits on the grommet centre (48px padding + 27px into the tag) */}
       <svg
-        className="string"
+        className="absolute left-1/2 top-0 z-[3] -ml-[22px] overflow-visible"
         width="44"
         height="78"
         viewBox="0 0 44 78"
