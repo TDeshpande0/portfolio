@@ -26,19 +26,33 @@ src/
 │   ├── home/
 │   │   └── HomePage.jsx     # assembles the homepage sections
 │   └── work/
+│       ├── tango-portal/
+│       │   ├── TangoCaseStudyPage.jsx   # the case study's written content + layout
+│       │   └── content.js               # its structured data, including every image path
 │       └── delta-airlines-redesign/
-│           ├── DeltaCaseStudyPage.jsx   # the case study's written content + layout
-│           └── content.js               # its structured data (meta, phases, comparison table)
+│           ├── DeltaCaseStudyPage.jsx
+│           └── content.js               # meta, phases, comparison table
 ├── components/
 │   ├── layout/              # SiteLayout (page wrapper), SiteNav (docks at the top, detaches into a glass pill on scroll), SiteFooter, Section
 │   ├── home/                # Hero, Ticker, Passport, SkillTags, LuggageTag, WorkSection, BoardingPass, TicketFace, Postcard
-│   ├── case-study/          # reusable case-study blocks: CaseStudyHero, CaseStudyLabel, PhaseRoute,
-│   │                        #   CaseStudySection, InfoCard, ComparisonTable, Figure
+│   ├── case-study/          # reusable case-study blocks. Header + route: CaseStudyHero, PhaseRoute.
+│   │                        #   Delta-style: CaseStudySection, CaseStudyLabel, InfoCard, ComparisonTable, Figure.
+│   │                        #   Tango-style: StorySection, SectionLabel, BodyText, SectionRule, StatCallout,
+│   │                        #   BeforeAfter, FeatureCards, PullQuote, BrowserFrame, PhoneGallery
 │   ├── transition/          # FlightTransition: the ticket-to-case-study animation
 │   └── illustrations/       # SVG artwork: BeachScene, Lily, HibiscusFlower, PlaneMark
 └── hooks/                   # usePendulum (tag swing physics), usePointerVelocity, useFlight, useScrolledPast, useDocumentTitle
+public/
+└── assets/
+    └── case-studies/
+        └── tango-portal/    # Tango screenshots and screen recordings (JPG + animated WebP)
 tailwind.config.js           # design tokens: colours, fonts, animations, breakpoints
 ```
+
+### Images and illustrations
+
+- **Case study images** live in `public/assets/case-studies/<slug>/` and are referenced by path (e.g. `/assets/case-studies/tango-portal/desktop-template-gallery.jpg`) from that page's `content.js`. To swap a picture, replace the file keeping its name, or point `src` at a new file and update its `width`/`height`.
+- **Illustrations** (beach scene, flowers, plane) are React SVG components in `src/components/illustrations/` for now. Hand-drawn replacements can go in `public/assets/illustrations/` when they're ready.
 
 ### Styling conventions
 
@@ -68,11 +82,12 @@ npm run format  # format everything in src/ with Prettier
 
 ### Adding a new case study
 
-1. Add its URL to `src/routes.js`, e.g. `orbitCaseStudy: "/work/orbit-launch"`.
-2. Create `src/pages/work/orbit-launch/OrbitCaseStudyPage.jsx` (copy the Delta page as a starting point) and, if needed, a `content.js` next to it.
-3. Register the route in `src/App.jsx`: `<Route path={ROUTES.orbitCaseStudy} element={<OrbitCaseStudyPage />} />`.
-4. In `src/data/home.js`, set that project's `href` to `ROUTES.orbitCaseStudy` so its boarding pass opens the page.
-5. Give the page a `<CaseStudyHero>` fed from `findProject(ROUTES.orbitCaseStudy)` (see the Delta page). Its `data-flight-target` markers are what the ticket flies into; without a hero, the transition simply fades.
+1. Add its URL to `src/routes.js`, e.g. `foldFlipCaseStudy: "/work/fold-and-flip"`.
+2. Create `src/pages/work/fold-and-flip/FoldFlipCaseStudyPage.jsx` with a `content.js` next to it. Copy the Tango page for the newer section style, or the Delta page for the original one.
+3. Put its images in `public/assets/case-studies/fold-and-flip/` and reference them from `content.js`.
+4. Register the route in `src/App.jsx`: `<Route path={ROUTES.foldFlipCaseStudy} element={<FoldFlipCaseStudyPage />} />`.
+5. In `src/data/home.js`, set that project's `href` to `ROUTES.foldFlipCaseStudy` so its boarding pass opens the page.
+6. Give the page a `<CaseStudyHero>` fed from `findProject(ROUTES.foldFlipCaseStudy)`. Its `data-flight-target` markers are what the ticket flies into; without a hero, the transition simply fades.
 
 ## Postcard contact form (email setup)
 

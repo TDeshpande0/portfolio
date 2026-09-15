@@ -1,5 +1,6 @@
 export const ROUTES = {
   home: "/",
+  tangoCaseStudy: "/work/tango-portal",
   deltaCaseStudy: "/work/delta-airlines-redesign",
 };
 

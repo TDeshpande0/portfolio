@@ -24,7 +24,7 @@ export default function DeltaCaseStudyPage() {
   return (
     <>
       <SiteNav
-        mark="CASE STUDY · 01"
+        mark={`CASE STUDY · ${PROJECT.gate}`}
         back={{ to: BACK_TO_WORK, label: "back to work" }}
       />
 

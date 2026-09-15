@@ -85,22 +85,13 @@ export const SKILL_TAGS = [
 // (they show as "coming soon"). `accent` colours the ticket's top band; `gate` doubles as the flight number.
 export const PROJECTS = [
   {
-    category: "branding",
-    title: "Orbit Brand Identity",
+    category: "product · internship",
+    title: "Tango Portal Redesign",
     blurb:
-      "A full identity system for a satellite logistics startup — wordmark, motion, and a launch site.",
-    href: null,
+      "A redesign of template selection and customization in the Tango Portal, shipped to production.",
+    href: ROUTES.tangoCaseStudy,
     accent: "#FF5A4E",
     gate: "01",
-  },
-  {
-    category: "product · accessibility",
-    title: "Delta Airlines Re‑Design",
-    blurb:
-      "Redesigned Delta's flight-booking flow for speed and accessibility — research, IA, and a full hi-fi prototype.",
-    href: ROUTES.deltaCaseStudy,
-    accent: "#00A6A0",
-    gate: "02",
   },
   {
     category: "motion",
@@ -109,6 +100,15 @@ export const PROJECTS = [
       "A personal series exploring flip and fold transitions inspired by paper ephemera.",
     href: null,
     accent: "#FF5D8F",
+    gate: "02",
+  },
+  {
+    category: "product · accessibility",
+    title: "Delta Airlines Re‑Design",
+    blurb:
+      "Redesigned Delta's flight-booking flow for speed and accessibility — research, IA, and a full hi-fi prototype.",
+    href: ROUTES.deltaCaseStudy,
+    accent: "#00A6A0",
     gate: "03",
   },
 ];
