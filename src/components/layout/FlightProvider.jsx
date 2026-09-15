@@ -4,6 +4,8 @@ import { FlightContext } from "../../hooks/useFlight";
 import PlaneMark from "../illustrations/PlaneMark";
 
 const FLIGHT_MS = 2600;
+// Matches the overlay's `animate-fade` duration (tailwind.config.js), plus a frame of margin.
+const OVERLAY_OPAQUE_MS = 270;
 
 // Provides flyTo(path) to the app and renders the "now boarding" overlay while it plays.
 export default function FlightProvider({ children }) {
@@ -16,10 +18,10 @@ export default function FlightProvider({ children }) {
       return;
     }
     setFlying(true);
-    window.setTimeout(() => {
-      navigate(path);
-      setFlying(false);
-    }, FLIGHT_MS);
+    // Swap pages as soon as the overlay fully covers the screen, so the destination
+    // renders behind the plane and is ready the moment the overlay lifts.
+    window.setTimeout(() => navigate(path), OVERLAY_OPAQUE_MS);
+    window.setTimeout(() => setFlying(false), FLIGHT_MS);
   };
 
   return (

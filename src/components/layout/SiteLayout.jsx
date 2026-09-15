@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import FlightProvider from "./FlightProvider";
 
@@ -6,7 +6,8 @@ import FlightProvider from "./FlightProvider";
 export default function SiteLayout() {
   const { pathname, hash } = useLocation();
 
-  useEffect(() => {
+  // Layout effect so the new page is scrolled into place before it's first painted.
+  useLayoutEffect(() => {
     if (hash) document.getElementById(hash.slice(1))?.scrollIntoView();
     else window.scrollTo(0, 0);
   }, [pathname, hash]);
