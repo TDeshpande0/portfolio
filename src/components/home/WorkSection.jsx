@@ -11,12 +11,11 @@ export default function WorkSection({ projects }) {
           Every project, a route flown.
         </h2>
         <div className="flex flex-col gap-6">
-          {projects.map((p, i) => (
+          {projects.map((p) => (
             <BoardingPass
               key={p.title}
               {...p}
-              gate={i + 1}
-              onOpen={p.href ? () => flyTo(p.href) : null}
+              onOpen={p.href ? (ticket) => flyTo(p.href, ticket) : null}
             />
           ))}
         </div>

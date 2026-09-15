@@ -30,12 +30,13 @@ src/
 │           ├── DeltaCaseStudyPage.jsx   # the case study's written content + layout
 │           └── content.js               # its structured data (meta, phases, comparison table)
 ├── components/
-│   ├── layout/              # SiteLayout (page wrapper), SiteNav, SiteFooter, Section, FlightProvider (plane transition)
-│   ├── home/                # Hero, Ticker, Passport, SkillTags, LuggageTag, WorkSection, BoardingPass, Postcard
+│   ├── layout/              # SiteLayout (page wrapper), SiteNav (docks at the top, detaches into a glass pill on scroll), SiteFooter, Section
+│   ├── home/                # Hero, Ticker, Passport, SkillTags, LuggageTag, WorkSection, BoardingPass, TicketFace, Postcard
 │   ├── case-study/          # reusable case-study blocks: CaseStudyHero, CaseStudyLabel, PhaseRoute,
 │   │                        #   CaseStudySection, InfoCard, ComparisonTable, Figure
+│   ├── transition/          # FlightTransition: the ticket-to-case-study animation
 │   └── illustrations/       # SVG artwork: BeachScene, Lily, HibiscusFlower, PlaneMark
-└── hooks/                   # usePendulum (tag swing physics), usePointerVelocity, useFlight, useDocumentTitle
+└── hooks/                   # usePendulum (tag swing physics), usePointerVelocity, useFlight, useScrolledPast, useDocumentTitle
 tailwind.config.js           # design tokens: colours, fonts, animations, breakpoints
 ```
 
@@ -61,6 +62,8 @@ npm run format  # format everything in src/ with Prettier
 
 - **Change homepage text, skills, or projects:** edit `src/data/home.js`.
 - **Tune the luggage tag swing:** edit `SWING` in `src/hooks/usePendulum.js`.
+- **Tune the ticket → case study transition:** edit `TIMELINE` (and the easing constants) at the top of `src/components/transition/FlightTransition.jsx`. As the clicked ticket's stub tears off, the ticket lifts off the page, rises into the case study header, and a circle opens from the header onto the page.
+- **Tune the return transition** (back link, browser Back, or swipe back from a case study): edit `RETURN` at the top of `src/components/layout/SiteLayout.jsx`. A navy circle closes over the case study, the homepage swaps in at the work section, and the navy fades away.
 - **Restyle a component:** edit the Tailwind classes in its `.jsx` file; to change a colour or font everywhere, edit `tailwind.config.js`.
 
 ### Adding a new case study
@@ -69,6 +72,7 @@ npm run format  # format everything in src/ with Prettier
 2. Create `src/pages/work/orbit-launch/OrbitCaseStudyPage.jsx` (copy the Delta page as a starting point) and, if needed, a `content.js` next to it.
 3. Register the route in `src/App.jsx`: `<Route path={ROUTES.orbitCaseStudy} element={<OrbitCaseStudyPage />} />`.
 4. In `src/data/home.js`, set that project's `href` to `ROUTES.orbitCaseStudy` so its boarding pass opens the page.
+5. Give the page a `<CaseStudyHero>` fed from `findProject(ROUTES.orbitCaseStudy)` (see the Delta page). Its `data-flight-target` markers are what the ticket flies into; without a hero, the transition simply fades.
 
 ## Postcard contact form (email setup)
 

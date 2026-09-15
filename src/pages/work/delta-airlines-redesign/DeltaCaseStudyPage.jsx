@@ -7,17 +7,19 @@ import InfoCard from "../../../components/case-study/InfoCard";
 import PhaseRoute from "../../../components/case-study/PhaseRoute";
 import SiteFooter from "../../../components/layout/SiteFooter";
 import SiteNav from "../../../components/layout/SiteNav";
+import { findProject } from "../../../data/home";
 import { useDocumentTitle } from "../../../hooks/useDocumentTitle";
 import { ROUTES } from "../../../routes";
 import { COMPARISON_COLUMNS, COMPARISON_ROWS, META, PHASES } from "./content";
 
 const BACK_TO_WORK = `${ROUTES.home}#work`;
+const PROJECT = findProject(ROUTES.deltaCaseStudy);
 
 const TWO_COLUMNS = "grid grid-cols-1 gap-5 md:grid-cols-2";
 const SUBHEAD = "mb-[14px] text-[15px] font-semibold";
 
 export default function DeltaCaseStudyPage() {
-  useDocumentTitle("Delta Airlines Re‑Design — Tanvi Deshpande");
+  useDocumentTitle(`${PROJECT.title} — Tanvi Deshpande`);
 
   return (
     <>
@@ -28,8 +30,10 @@ export default function DeltaCaseStudyPage() {
 
       <CaseStudyHero
         label="product design · airline booking"
-        title="Delta Airlines Re‑Design"
+        title={PROJECT.title}
         tagline="Making travel faster."
+        accent={PROJECT.accent}
+        gate={PROJECT.gate}
         meta={META}
       />
 

@@ -82,7 +82,7 @@ export const SKILL_TAGS = [
 
 // Boarding passes in the work section. Set `href` to a case study route to
 // make the pass open it; leave it null for projects without a page yet
-// (they show as "coming soon"). `accent` colours the ticket's top band.
+// (they show as "coming soon"). `accent` colours the ticket's top band; `gate` doubles as the flight number.
 export const PROJECTS = [
   {
     category: "branding",
@@ -91,6 +91,7 @@ export const PROJECTS = [
       "A full identity system for a satellite logistics startup — wordmark, motion, and a launch site.",
     href: null,
     accent: "#FF5A4E",
+    gate: "01",
   },
   {
     category: "product · accessibility",
@@ -99,6 +100,7 @@ export const PROJECTS = [
       "Redesigned Delta's flight-booking flow for speed and accessibility — research, IA, and a full hi-fi prototype.",
     href: ROUTES.deltaCaseStudy,
     accent: "#00A6A0",
+    gate: "02",
   },
   {
     category: "motion",
@@ -107,5 +109,11 @@ export const PROJECTS = [
       "A personal series exploring flip and fold transitions inspired by paper ephemera.",
     href: null,
     accent: "#FF5D8F",
+    gate: "03",
   },
 ];
+
+// The project whose case study lives at `href`, so its page header matches its ticket.
+export function findProject(href) {
+  return PROJECTS.find((project) => project.href === href);
+}
