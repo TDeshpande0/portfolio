@@ -10,7 +10,14 @@ export const META = [
   ["Team", "Solo project"],
 ];
 
-export const PHASES = ["Empathize", "Define", "Ideate", "Prototype", "Test"];
+// Route stops at the top of the page; each one scrolls to its section.
+export const PHASES = [
+  { label: "Empathize", href: "#empathize" },
+  { label: "Define", href: "#define" },
+  { label: "Ideate", href: "#ideate" },
+  { label: "Prototype", href: "#prototype" },
+  { label: "Test", href: "#test" },
+];
 
 export const COMPARISON_COLUMNS = [
   "Criteria",

@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import CaseStudyHero from "../../../components/case-study/CaseStudyHero";
-import CaseStudySection from "../../../components/case-study/CaseStudySection";
 import ComparisonTable from "../../../components/case-study/ComparisonTable";
 import Figure from "../../../components/case-study/Figure";
 import InfoCard from "../../../components/case-study/InfoCard";
 import PhaseRoute from "../../../components/case-study/PhaseRoute";
+import StorySection from "../../../components/case-study/StorySection";
 import SiteFooter from "../../../components/layout/SiteFooter";
 import SiteNav from "../../../components/layout/SiteNav";
 import { findProject } from "../../../data/home";
@@ -39,17 +39,19 @@ export default function DeltaCaseStudyPage() {
 
       <PhaseRoute phases={PHASES} />
 
-      <CaseStudySection label="overview">
+      <StorySection label="overview">
         <p className="max-w-[70ch] text-[15px] text-muted">
           Delta’s online booking experience overwhelms first-time flyers — long
           forms, confusing seat selection, and buried accessibility options.
           This project rebuilds the flight-booking flow into something faster,
           clearer, and genuinely usable for every kind of traveler.
         </p>
-      </CaseStudySection>
+      </StorySection>
 
-      <CaseStudySection
-        label="01 · empathize"
+      <StorySection
+        id="empathize"
+        number="01"
+        label="empathize"
         title="Understanding the traveler."
       >
         <div className={`${TWO_COLUMNS} mb-[30px]`}>
@@ -85,10 +87,12 @@ export default function DeltaCaseStudyPage() {
             note="David — the retired assisted traveler"
           />
         </div>
-      </CaseStudySection>
+      </StorySection>
 
-      <CaseStudySection
-        label="02 · define"
+      <StorySection
+        id="define"
+        number="02"
+        label="define"
         title="Turning research into a problem."
       >
         <div className="mb-[30px] rounded-[10px] bg-navy-deep px-[34px] py-[30px] text-[16px] leading-[1.7] text-paper">
@@ -115,9 +119,14 @@ export default function DeltaCaseStudyPage() {
             ]}
           />
         </div>
-      </CaseStudySection>
+      </StorySection>
 
-      <CaseStudySection label="03 · ideate" title="Structuring the new flow.">
+      <StorySection
+        id="ideate"
+        number="03"
+        label="ideate"
+        title="Structuring the new flow."
+      >
         <div className="flex flex-col gap-6">
           <Figure tab="site map" note="Information architecture" />
           <Figure tab="user flow · legend included" note="User flow diagram" />
@@ -127,9 +136,14 @@ export default function DeltaCaseStudyPage() {
             dark
           />
         </div>
-      </CaseStudySection>
+      </StorySection>
 
-      <CaseStudySection label="04 · prototype" title="Building the system.">
+      <StorySection
+        id="prototype"
+        number="04"
+        label="prototype"
+        title="Building the system."
+      >
         <div className={`${TWO_COLUMNS} mb-5`}>
           <Figure tab="typography" note="PT Serif · Fira Sans specimen" />
           <Figure tab="buttons · tags · overlay" note="UI component library" />
@@ -146,10 +160,12 @@ export default function DeltaCaseStudyPage() {
             dark
           />
         </div>
-      </CaseStudySection>
+      </StorySection>
 
-      <CaseStudySection
-        label="05 · test"
+      <StorySection
+        id="test"
+        number="05"
+        label="test"
         title="Validating with real travelers."
       >
         <InfoCard title="Usability test plan" className="mb-[30px]">
@@ -177,7 +193,7 @@ export default function DeltaCaseStudyPage() {
             ]}
           />
         </div>
-      </CaseStudySection>
+      </StorySection>
 
       <SiteFooter>
         <Link to={BACK_TO_WORK} className="underline">
