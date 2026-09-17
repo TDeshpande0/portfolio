@@ -7,14 +7,21 @@ const ASSETS = "/assets/case-studies/tango-portal";
 // Facts on the header's boarding pass: [label, value].
 export const META = [
   ["Role", "Product Design Intern"],
-  ["Company", "Blackhawk Network, Tango Portal"],
+  ["Company", "Blackhawk Network"],
   ["Timeline", "May to August 2026"],
   ["Manager", "Ryan Gilsdorf"],
-  ["Platforms", "Desktop and mobile web"],
-  ["Formats", "Email, text, letterhead"],
+  ["Platforms", "Desktop and Mobile"],
+  ["Formats", "Email, Text, & Print"],
 ];
 
-export const PHASES = ["DISCOVER", "DEFINE", "DESIGN", "ITERATE", "DELIVER"];
+// Route-bar stops. `href` points at the id of the section each one covers.
+export const PHASES = [
+  { label: "DISCOVER", href: "#discover" },
+  { label: "DEFINE", href: "#define" },
+  { label: "DESIGN", href: "#design" },
+  { label: "ITERATE", href: "#iterate" },
+  { label: "DELIVER", href: "#deliver" },
+];
 
 export const BEFORE = [
   "Customization came before template selection",

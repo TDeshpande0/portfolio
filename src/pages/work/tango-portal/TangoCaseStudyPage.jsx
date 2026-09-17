@@ -80,6 +80,7 @@ export default function TangoCaseStudyPage() {
         <SectionRule />
 
         <StorySection
+          id="discover"
           number="01"
           label="Discover"
           title="Customization came before the decision it depended on."
@@ -113,6 +114,7 @@ export default function TangoCaseStudyPage() {
         <SectionRule />
 
         <StorySection
+          id="define"
           number="02"
           label="Define"
           title="Making the case with data."
@@ -141,6 +143,7 @@ export default function TangoCaseStudyPage() {
         <SectionRule />
 
         <StorySection
+          id="design"
           number="03"
           label="Design · desktop"
           title="Select first, preview throughout, customize by choice."
@@ -214,6 +217,7 @@ export default function TangoCaseStudyPage() {
         <SectionRule />
 
         <StorySection
+          id="iterate"
           number="04"
           label="Iterate"
           title="Iteration, review, and scope decisions."
@@ -240,6 +244,7 @@ export default function TangoCaseStudyPage() {
         <SectionRule />
 
         <StorySection
+          id="deliver"
           number="05"
           label="Deliver"
           title="Running in production."

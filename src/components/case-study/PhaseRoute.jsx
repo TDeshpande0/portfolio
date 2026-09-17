@@ -1,6 +1,20 @@
 // The numbered design-process stops shown as a flight route.
+// `phases` entries are plain labels, or { label, href } to make a stop scroll to that section.
 // `wrapOnMobile`: on phones the stops wrap onto centred rows and the dashed route line is hidden.
 export default function PhaseRoute({ phases, wrapOnMobile = false }) {
+  // Scroll rather than jump, and leave the URL's hash without telling the router (a hash change
+  // would re-run the layout's own scroll handling on top of this one).
+  const goTo = (e, href) => {
+    const target = document.querySelector(href);
+    if (!target) return;
+    e.preventDefault();
+    const reduceMotion = window.matchMedia?.(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
+    window.history.replaceState(null, "", href);
+  };
+
   return (
     <div
       className={`bg-navy-deep py-[30px] ${wrapOnMobile ? "px-5 md:px-10" : "px-10"}`}
@@ -12,17 +26,39 @@ export default function PhaseRoute({ phases, wrapOnMobile = false }) {
             : "justify-between"
         }`}
       >
-        {phases.map((p, i) => (
-          <li
-            className="relative z-[1] flex flex-col items-center gap-2 font-mono tracking-[1px]"
-            key={p}
-          >
-            <span className="flex h-[34px] w-[34px] items-center justify-center rounded-full border-2 border-gold bg-paper text-[12px] font-bold text-navy-deep">
-              {String(i + 1).padStart(2, "0")}
-            </span>
-            <span className="text-[10px] text-kraft">{p}</span>
-          </li>
-        ))}
+        {phases.map((phase, i) => {
+          const { label, href } =
+            typeof phase === "string" ? { label: phase } : phase;
+          const number = String(i + 1).padStart(2, "0");
+          const stop = (
+            <>
+              <span className="flex h-[34px] w-[34px] items-center justify-center rounded-full border-2 border-gold bg-paper text-[12px] font-bold text-navy-deep transition-colors group-hover:bg-gold">
+                {number}
+              </span>
+              <span className="text-[10px] text-kraft transition-colors group-hover:text-gold">
+                {label}
+              </span>
+            </>
+          );
+          return (
+            <li
+              className="relative z-[1] flex flex-col items-center gap-2 font-mono tracking-[1px]"
+              key={label}
+            >
+              {href ? (
+                <a
+                  href={href}
+                  onClick={(e) => goTo(e, href)}
+                  className="group flex flex-col items-center gap-2 rounded-lg no-underline outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-4 focus-visible:ring-offset-navy-deep"
+                >
+                  {stop}
+                </a>
+              ) : (
+                stop
+              )}
+            </li>
+          );
+        })}
       </ol>
     </div>
   );
