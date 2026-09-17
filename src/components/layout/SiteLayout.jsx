@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useLocation, useOutlet } from "react-router-dom";
 import { isCaseStudy, ROUTES } from "../../routes";
 import FlightTransition from "../transition/FlightTransition";
+import BackToTop from "./BackToTop";
 
 // Leaving a case study for the homepage: a navy circle closes over the case study, the homepage
 // swaps in underneath (already scrolled to the work section), and the navy fades away.
@@ -105,6 +106,7 @@ export default function SiteLayout() {
       <FlightTransition>
         {page.returning ? page.outlet : outlet}
       </FlightTransition>
+      <BackToTop />
       {covered && (
         <div
           ref={cover}
