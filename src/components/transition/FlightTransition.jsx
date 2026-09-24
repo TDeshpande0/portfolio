@@ -169,7 +169,7 @@ export default function FlightTransition({ children }) {
     await nextFrame();
     // The real header's shadow is switched off while the flying copy (with its own shadow) sits on
     // top of it; otherwise the two stack into a darker shadow that visibly lightens at the hand-off.
-    const headerFrame = card.parentElement;
+    const headerFrame = card.closest("[data-flight-frame]");
     const headerShadow = getComputedStyle(headerFrame).filter;
     headerFrame.style.filter = "none";
     hiddenShadow.current = headerFrame;
@@ -385,7 +385,11 @@ export default function FlightTransition({ children }) {
     <FlightContext.Provider value={flyTo}>
       {children}
       {flight && (
-        <div className="fixed inset-0 z-[9999]" aria-hidden="true">
+        <div
+          className="fixed inset-0 z-[9999]"
+          aria-hidden="true"
+          data-flight-overlay
+        >
           <div
             ref={backdrop}
             className="flight-backdrop absolute inset-0 bg-navy-deep opacity-0"

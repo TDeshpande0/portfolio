@@ -146,3 +146,31 @@ export const PRODUCTION = [
     caption: "Production · text gallery",
   },
 ];
+
+// The summary card under the header pass, revealed when it's peeled off.
+export const SUMMARY = {
+  title: "The short version",
+  subtitle: "Tango Portal · template redesign",
+  rows: [
+    [
+      "Problem",
+      "The flow opened into a customization editor before senders had chosen a template, and offered no preview. 50% of users exited that screen to go find a different template.",
+    ],
+    [
+      "Approach",
+      "Reordered the flow so template selection comes first, added a live preview beside every template, and made customization an opt-in step rather than a required one.",
+    ],
+    [
+      "Scope",
+      "Desktop and mobile web, across all three delivery formats: email, text message, and printed letterhead.",
+    ],
+    [
+      "Role",
+      "Sole designer. Built on the company UI toolkit and introduced a split-screen pattern it did not previously contain.",
+    ],
+    [
+      "Outcome",
+      "Built and launched on the live portal before the internship ended. It is too early for performance data; the 50% exit rate is the number that will show whether it worked.",
+    ],
+  ],
+};

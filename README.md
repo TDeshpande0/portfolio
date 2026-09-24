@@ -29,23 +29,32 @@ src/
 │       ├── tango-portal/
 │       │   ├── TangoCaseStudyPage.jsx   # the case study's written content + layout
 │       │   └── content.js               # its structured data, including every image path
+│       ├── tango-reward-campaigns/
+│       │   ├── CampaignsCaseStudyPage.jsx   # brand collections case study
+│       │   └── content.js
 │       └── delta-airlines-redesign/
 │           ├── DeltaCaseStudyPage.jsx
-│           └── content.js               # meta, phases, comparison table
+│           ├── DeltaUiKit.jsx           # Delta's brand kit, in Delta's own colours and fonts
+│           ├── UserFlowDiagram.jsx      # the booking user flow SVG
+│           └── content.js               # meta, phases, research, personas, site map, images
 ├── components/
 │   ├── layout/              # SiteLayout (page wrapper), SiteNav (docks at the top, detaches into a glass pill on scroll), SiteFooter, Section
 │   ├── home/                # Hero, Ticker, Passport, SkillTags, LuggageTag, WorkSection, BoardingPass, TicketFace, Postcard
 │   ├── case-study/          # reusable case-study blocks. Header + route: CaseStudyHero, PhaseRoute.
-│   │                        #   Delta-style: CaseStudySection, CaseStudyLabel, InfoCard, ComparisonTable, Figure.
+│   │                        #   Delta-style: CaseStudyLabel, InfoCard, ComparisonTable, StickyNotes, PersonaCard,
+│   │                        #   FindingCards, NeedsGoals, SiteMapTree, ZoomableDiagram, Lightbox.
 │   │                        #   Tango-style: StorySection, SectionLabel, BodyText, SectionRule, StatCallout,
-│   │                        #   BeforeAfter, FeatureCards, PullQuote, BrowserFrame, PhoneGallery
+│   │                        #   BeforeAfter, FeatureCards, PullQuote, BrowserFrame, PhoneGallery,
+│   │                        #   FlowSteps, DetailFigure
 │   ├── transition/          # FlightTransition: the ticket-to-case-study animation
 │   └── illustrations/       # SVG artwork: BeachScene, Lily, HibiscusFlower, PlaneMark
 └── hooks/                   # usePendulum (tag swing physics), usePointerVelocity, useFlight, useScrolledPast, useDocumentTitle
 public/
 └── assets/
     └── case-studies/
-        └── tango-portal/    # Tango screenshots and screen recordings (JPG + animated WebP)
+        ├── tango-portal/    # Tango screenshots and screen recordings (JPG + animated WebP)
+        ├── tango-reward-campaigns/  # brand collections screenshots
+        └── delta-airlines-redesign/  # wireframes, Delta brand assets, persona photos (Unsplash)
 tailwind.config.js           # design tokens: colours, fonts, animations, breakpoints
 ```
 

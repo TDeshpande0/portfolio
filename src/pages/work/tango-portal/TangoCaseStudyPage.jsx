@@ -29,6 +29,7 @@ import {
   PHONE_ROWS,
   PORTAL_URL,
   PRODUCTION,
+  SUMMARY,
 } from "./content";
 
 const BACK_TO_WORK = `${ROUTES.home}#work`;
@@ -54,6 +55,7 @@ export default function TangoCaseStudyPage() {
         accent={PROJECT.accent}
         gate={PROJECT.gate}
         meta={META}
+        back={SUMMARY}
       />
 
       {/* the body of this case study uses slightly roomier line spacing */}

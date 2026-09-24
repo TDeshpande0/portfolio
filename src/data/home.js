@@ -94,11 +94,11 @@ export const PROJECTS = [
     gate: "01",
   },
   {
-    category: "motion",
-    title: "Fold & Flip Motion Series",
+    category: "product · internship",
+    title: "Tango Portal Reward Campaigns",
     blurb:
-      "A personal series exploring flip and fold transitions inspired by paper ephemera.",
-    href: null,
+      "Introducing brand collections to Tango Portal campaigns, so bulk rewards offer the brands that fit the occasion.",
+    href: ROUTES.campaignsCaseStudy,
     accent: "#FF5D8F",
     gate: "02",
   },
