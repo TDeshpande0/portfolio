@@ -1,6 +1,6 @@
-// Replace with Tanvi's real address. Used by the postcard's mailto: fallback
-// when no Web3Forms key is configured (see README).
-export const CONTACT_EMAIL = "hello@you.com";
+// Tanvi's address. Used by the postcard's mailto: fallback
+// when no Web3Forms key is configured (see NOTES.md).
+export const CONTACT_EMAIL = "tanvi1550@gmail.com";
 
 // Link for the About page's "View my resume" button (e.g. "/resume.pdf" in public/, or a Drive
 // link). The button stays hidden until this is set.
