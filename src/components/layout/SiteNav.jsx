@@ -83,7 +83,7 @@ export default function SiteNav({ mark, links, back }) {
           className={`pointer-events-auto mx-auto flex items-center justify-between transition-[max-width,height,padding,border-radius,border-width,border-color,background-color,box-shadow,backdrop-filter] duration-500 ${EASE} ${
             detached
               ? "liquid-glass h-[52px] max-w-[1000px] rounded-[26px] border border-white/70 px-5 md:px-7"
-              : `${DOCKED_HEIGHT} max-w-full border-b-[3px] border-ink px-5 md:px-10`
+              : `${DOCKED_HEIGHT} max-w-full border-b-[3px] border-ink bg-kraft/30 px-5 backdrop-blur-[6px] md:px-10`
           }`}
         >
           <div className="font-mono text-[12px] tracking-[2px]">{mark}</div>

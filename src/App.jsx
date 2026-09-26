@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import SiteLayout from "./components/layout/SiteLayout";
+import AboutPage from "./pages/about/AboutPage";
 import HomePage from "./pages/home/HomePage";
 import CampaignsCaseStudyPage from "./pages/work/tango-reward-campaigns/CampaignsCaseStudyPage";
 import DeltaCaseStudyPage from "./pages/work/delta-airlines-redesign/DeltaCaseStudyPage";
@@ -11,6 +12,7 @@ export default function App() {
     <Routes>
       <Route element={<SiteLayout />}>
         <Route path={ROUTES.home} element={<HomePage />} />
+        <Route path={ROUTES.about} element={<AboutPage />} />
         <Route path={ROUTES.tangoCaseStudy} element={<TangoCaseStudyPage />} />
         <Route
           path={ROUTES.campaignsCaseStudy}

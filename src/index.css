@@ -31,28 +31,6 @@
 
 /* Decorative textures and shapes that are clearer as named classes than as utility strings. */
 @layer components {
-  /* Legibility wash behind the hero copy: top-down on phones, left-to-right on desktop. */
-  .hero-scrim {
-    background: linear-gradient(
-      180deg,
-      rgba(255, 251, 242, 0.95) 0%,
-      rgba(255, 251, 242, 0.88) 46%,
-      rgba(255, 251, 242, 0.3) 72%,
-      rgba(255, 251, 242, 0) 90%
-    );
-  }
-  @media (min-width: theme("screens.md")) {
-    .hero-scrim {
-      background: linear-gradient(
-        100deg,
-        rgba(255, 251, 242, 0.94) 0%,
-        rgba(255, 251, 242, 0.86) 32%,
-        rgba(255, 251, 242, 0.5) 52%,
-        rgba(255, 251, 242, 0) 76%
-      );
-    }
-  }
-
   /* Passport: guilloche security pattern plus a diagonal sheen. */
   .passport-paper {
     background-image:
@@ -124,6 +102,20 @@
       rgba(255, 255, 255, 0.03) 3px,
       rgba(255, 255, 255, 0.03) 4px
     );
+  }
+
+  /* Film grain over the photobooth photos: SVG fractal noise, blended so it speckles light and
+     dark areas alike. Raise `opacity` for heavier grain. */
+  .film-grain::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.55;
+    mix-blend-mode: overlay;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")
+      0 0/160px 160px;
   }
 
   /* Luggage tag card: paper grain and clipped top corners. */

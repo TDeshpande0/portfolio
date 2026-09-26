@@ -1,3 +1,7 @@
+import { BookOpen } from "lucide-react";
+import { useRef } from "react";
+import { usePassport } from "../../hooks/usePassport";
+
 const LABEL = "font-mono text-[8px] tracking-[1px] text-muted";
 
 const CORNERS = [
@@ -7,9 +11,15 @@ const CORNERS = [
   { bottom: 44, right: 22, borderWidth: "0 2px 2px 0" },
 ];
 
-export default function Passport({ fields }) {
+export default function Passport({ fields, photos }) {
+  const openPassport = usePassport();
+  const passport = useRef(null);
+
   return (
-    <div className="passport-paper relative overflow-hidden rounded-[3px] border border-black/15 bg-paper shadow-[0_24px_50px_-26px_rgba(0,0,0,.55)]">
+    <div
+      ref={passport}
+      className="passport-paper relative overflow-hidden rounded-[3px] border border-black/15 bg-paper shadow-[0_24px_50px_-26px_rgba(0,0,0,.55)]"
+    >
       <span className="perforated-edge absolute inset-y-0 right-0 z-[2] w-[22px] opacity-60" />
 
       {/* header */}
@@ -58,6 +68,18 @@ export default function Passport({ fields }) {
                 Tanvi Deshpande
               </div>
               <div className={`mt-1 ${LABEL}`}>holder’s signature</div>
+              <button
+                type="button"
+                onClick={() => openPassport(passport.current)}
+                className="group mt-4 inline-flex items-center gap-2 rounded-full bg-navy-deep px-[18px] py-[10px] font-mono text-[11px] uppercase tracking-[1.6px] text-paper shadow-[0_12px_24px_-16px_rgba(5,76,72,.9)] outline-none transition hover:-translate-y-0.5 hover:bg-airmail focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2"
+              >
+                <BookOpen
+                  size={15}
+                  aria-hidden="true"
+                  className="transition-transform group-hover:-rotate-6"
+                />
+                Open passport
+              </button>
             </div>
             <div className="flex flex-col items-center gap-[3px]">
               <svg
@@ -80,9 +102,9 @@ export default function Passport({ fields }) {
         {/* photo strip */}
         <div className="relative flex flex-col items-center border-t border-black/[.09] pb-6 pl-[30px] pr-[34px] pt-[26px] md:border-l md:border-t-0">
           <div className="absolute right-[10px] top-[14px] z-[3] flex h-20 w-20 rotate-[-16deg] items-center justify-center rounded-full border-[2.5px] border-airmail text-center font-mono text-[10px] tracking-[2px] text-airmail opacity-90">
-            designer
+            born to
             <br />
-            approved
+            travel
           </div>
           {CORNERS.map((c, i) => (
             <span
@@ -92,13 +114,21 @@ export default function Passport({ fields }) {
             />
           ))}
           <div className="relative z-[1] rotate-[-2.5deg] border border-black/[.12] bg-paper px-[9px] pb-[22px] pt-[9px] shadow-[0_14px_30px_-16px_rgba(0,0,0,.4)]">
-            {["01", "02", "03"].map((n) => (
+            {photos.map((photo, i) => (
               <div
-                className="scanlines relative mb-[6px] h-[118px] w-[150px] overflow-hidden bg-navy-deep"
-                key={n}
+                className="scanlines film-grain relative mx-auto mb-[6px] h-[118px] w-[150px] overflow-hidden bg-navy-deep"
+                key={photo.src}
               >
-                <span className="absolute bottom-[5px] right-[7px] font-mono text-[9px] text-kraft-deep">
-                  {n}
+                <img
+                  className="absolute inset-0 h-full w-full object-cover"
+                  src={photo.src}
+                  alt={photo.alt}
+                  width={450}
+                  height={354}
+                  loading="lazy"
+                />
+                <span className="absolute bottom-[5px] right-[7px] z-[2] font-mono text-[9px] text-kraft-deep">
+                  {String(i + 1).padStart(2, "0")}
                 </span>
               </div>
             ))}

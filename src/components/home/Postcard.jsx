@@ -133,7 +133,6 @@ export default function Postcard() {
                   55
                 </span>
                 <HibiscusFlower
-                  uid="pc-stamp"
                   style={{
                     position: "absolute",
                     top: 14,

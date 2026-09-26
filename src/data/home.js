@@ -31,8 +31,24 @@ export const PASSPORT_FIELDS = [
   ["Given names", "Tanvi"],
   ["Nationality", "Product design"],
   ["Date of issue", "2026"],
-  ["Place of birth", "Your city"],
   ["Authority", "Open to work"],
+];
+
+// Photos in the passport's photobooth strip, top to bottom. Each is cropped to the frame's shape
+// (150:118) and lives in public/assets/home/.
+export const PASSPORT_PHOTOS = [
+  {
+    src: "/assets/home/passport-1.webp",
+    alt: "A mountain road winding toward snowy peaks under a grey sky",
+  },
+  {
+    src: "/assets/home/passport-2.webp",
+    alt: "A small wooden cabin with a red tile roof among tropical plants",
+  },
+  {
+    src: "/assets/home/passport-3.webp",
+    alt: "Wine barrels stacked under tall palm trees at a vineyard",
+  },
 ];
 
 // Luggage tags in the skills section. `flash` is the tag's band colour,
@@ -47,33 +63,33 @@ export const SKILL_TAGS = [
     tilt: -2.5,
   },
   {
-    code: "WEB",
-    dest: "webflow",
-    name: "Webflow",
+    code: "RES",
+    dest: "user research",
+    name: "Research",
     flash: "#2FA968",
     serial: "BAG‑0002",
     tilt: 2.5,
   },
   {
-    code: "MOT",
-    dest: "motion design",
-    name: "Motion",
+    code: "PRO",
+    dest: "prototyping",
+    name: "Prototyping",
     flash: "#FFC53D",
     serial: "BAG‑0003",
     tilt: -2.5,
   },
   {
-    code: "BRD",
-    dest: "branding",
-    name: "Branding",
+    code: "SYS",
+    dest: "design systems",
+    name: "Systems",
     flash: "#FF5D8F",
     serial: "BAG‑0004",
     tilt: 2.5,
   },
   {
-    code: "TYP",
-    dest: "typography",
-    name: "Type",
+    code: "ACC",
+    dest: "accessibility",
+    name: "Accessibility",
     flash: "#00A6A0",
     serial: "BAG‑0005",
     tilt: -2.5,

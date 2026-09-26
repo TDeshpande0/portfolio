@@ -25,6 +25,9 @@ src/
 ├── pages/
 │   ├── home/
 │   │   └── HomePage.jsx     # assembles the homepage sections
+│   ├── about/
+│   │   ├── AboutPage.jsx    # the About page, opened from the passport
+│   │   └── content.js       # timeline, customs items, facts, trip photos
 │   └── work/
 │       ├── tango-portal/
 │       │   ├── TangoCaseStudyPage.jsx   # the case study's written content + layout
@@ -46,8 +49,8 @@ src/
 │   │                        #   Tango-style: StorySection, SectionLabel, BodyText, SectionRule, StatCallout,
 │   │                        #   BeforeAfter, FeatureCards, PullQuote, BrowserFrame, PhoneGallery,
 │   │                        #   FlowSteps, DetailFigure
-│   ├── transition/          # FlightTransition: the ticket-to-case-study animation
-│   └── illustrations/       # SVG artwork: BeachScene, Lily, HibiscusFlower, PlaneMark
+│   ├── transition/          # FlightTransition (ticket → case study), PassportTransition (passport → About)
+│   └── illustrations/       # Lily, PlaneMark (SVG); HibiscusFlower (Tanvi's drawing, public/assets/illustrations/)
 └── hooks/                   # usePendulum (tag swing physics), usePointerVelocity, useFlight, useScrolledPast, useDocumentTitle
 public/
 └── assets/
@@ -61,7 +64,9 @@ tailwind.config.js           # design tokens: colours, fonts, animations, breakp
 ### Images and illustrations
 
 - **Case study images** live in `public/assets/case-studies/<slug>/` and are referenced by path (e.g. `/assets/case-studies/tango-portal/desktop-template-gallery.jpg`) from that page's `content.js`. To swap a picture, replace the file keeping its name, or point `src` at a new file and update its `width`/`height`.
-- **Illustrations** (beach scene, flowers, plane) are React SVG components in `src/components/illustrations/` for now. Hand-drawn replacements can go in `public/assets/illustrations/` when they're ready.
+- **Hero drawing:** `public/assets/home/hero-beach.webp` (Tanvi's hand-drawn beach, converted to WebP) sits behind the nav, ticker and hero via `HeroArt`, filling the whole first screen top to bottom (sides cropped as needed), and blurs into the page at the passport. To replace it, export a new WebP at about 2400px wide and keep the file name, or update `src` and `width`/`height` in `src/components/home/HeroArt.jsx`.
+- **Hibiscus:** `public/assets/illustrations/hibiscus.webp` (Tanvi's drawing), shown by `HibiscusFlower` on the luggage tags and the postcard stamp.
+- **Other illustrations** (lily, plane) are React SVG components in `src/components/illustrations/` for now. Hand-drawn replacements can go in `public/assets/` when they're ready.
 
 ### Styling conventions
 
@@ -86,6 +91,8 @@ npm run format  # format everything in src/ with Prettier
 - **Change homepage text, skills, or projects:** edit `src/data/home.js`.
 - **Tune the luggage tag swing:** edit `SWING` in `src/hooks/usePendulum.js`.
 - **Tune the ticket → case study transition:** edit `TIMELINE` (and the easing constants) at the top of `src/components/transition/FlightTransition.jsx`. As the clicked ticket's stub tears off, the ticket lifts off the page, rises into the case study header, and a circle opens from the header onto the page.
+- **Tune the passport → About transition:** edit `TIMELINE` at the top of `src/components/transition/PassportTransition.jsx`. The passport lifts, its data page turns over, an ARRIVED stamp lands on the blank visa page, and that page opens out into the About page as the stamp settles beside the photo.
+- **Add the resume link:** set `RESUME_URL` in `src/data/site.js`; the About page's "View my resume" button appears once it's set.
 - **Tune the return transition** (back link, browser Back, or swipe back from a case study): edit `RETURN` at the top of `src/components/layout/SiteLayout.jsx`. A navy circle closes over the case study, the homepage swaps in at the work section, and the navy fades away.
 - **Restyle a component:** edit the Tailwind classes in its `.jsx` file; to change a colour or font everywhere, edit `tailwind.config.js`.
 

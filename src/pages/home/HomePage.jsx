@@ -1,4 +1,5 @@
 import Hero from "../../components/home/Hero";
+import HeroArt from "../../components/home/HeroArt";
 import Passport from "../../components/home/Passport";
 import Postcard from "../../components/home/Postcard";
 import SkillTags from "../../components/home/SkillTags";
@@ -12,6 +13,7 @@ import {
   HERO,
   NAV_LINKS,
   PASSPORT_FIELDS,
+  PASSPORT_PHOTOS,
   PROJECTS,
   SKILL_TAGS,
 } from "../../data/home";
@@ -22,8 +24,9 @@ export default function HomePage() {
 
   return (
     <>
-      {/* nav + ticker + hero fill exactly one screen */}
-      <div className="flex min-h-screen flex-col supports-[height:100svh]:min-h-svh">
+      {/* nav + ticker + hero fill exactly one screen, with the beach drawing behind all three */}
+      <div className="relative flex min-h-screen flex-col supports-[height:100svh]:min-h-svh">
+        <HeroArt />
         <SiteNav mark="TANVI DESHPANDE" links={NAV_LINKS} />
         <Ticker destinations={DESTINATIONS} />
         <Hero {...HERO} />
@@ -32,7 +35,7 @@ export default function HomePage() {
       <div className="mx-auto max-w-[1000px] border-t-[3px] border-ink" />
 
       <Section id="about" aria-label="About me">
-        <Passport fields={PASSPORT_FIELDS} />
+        <Passport fields={PASSPORT_FIELDS} photos={PASSPORT_PHOTOS} />
       </Section>
 
       <Section>

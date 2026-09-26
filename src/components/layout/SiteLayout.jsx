@@ -2,10 +2,11 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useLocation, useOutlet } from "react-router-dom";
 import { isCaseStudy, ROUTES } from "../../routes";
 import FlightTransition from "../transition/FlightTransition";
+import PassportTransition from "../transition/PassportTransition";
 import BackToTop from "./BackToTop";
 
-// Leaving a case study for the homepage: a navy circle closes over the case study, the homepage
-// swaps in underneath (already scrolled to the work section), and the navy fades away.
+// Leaving a case study (or the About page) for the homepage: a navy circle closes over it, the
+// homepage swaps in underneath (already scrolled to where you left it), and the navy fades away.
 const RETURN = {
   close: 550,
   open: 350,
@@ -32,7 +33,7 @@ export default function SiteLayout() {
 
   if (page.pathname !== location.pathname) {
     const returning =
-      isCaseStudy(page.pathname) &&
+      (isCaseStudy(page.pathname) || page.pathname === ROUTES.about) &&
       location.pathname === ROUTES.home &&
       !prefersReducedMotion();
     setPage({
@@ -102,9 +103,11 @@ export default function SiteLayout() {
   }, [covered, page.returning]);
 
   return (
-    <div className="overflow-x-hidden bg-kraft font-sans leading-[1.6] text-ink">
+    <div className="isolate overflow-x-hidden bg-kraft font-sans leading-[1.6] text-ink">
       <FlightTransition>
-        {page.returning ? page.outlet : outlet}
+        <PassportTransition>
+          {page.returning ? page.outlet : outlet}
+        </PassportTransition>
       </FlightTransition>
       <BackToTop />
       {covered && (

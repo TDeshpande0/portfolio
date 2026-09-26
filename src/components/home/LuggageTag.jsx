@@ -70,10 +70,7 @@ export default function LuggageTag({
             </div>
           </div>
         </div>
-        <HibiscusFlower
-          uid={`tag-${code}`}
-          className="absolute bottom-[34px] right-[-12px] h-[42px] w-[42px] rotate-[12deg]"
-        />
+        <HibiscusFlower className="absolute bottom-[34px] right-[-12px] h-[42px] w-[42px]" />
       </div>
 
       {/* string loop: its lower end sits on the grommet centre (48px padding + 27px into the tag) */}

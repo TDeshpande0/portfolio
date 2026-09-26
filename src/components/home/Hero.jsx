@@ -1,33 +1,8 @@
-import BeachScene from "../illustrations/BeachScene";
-import HibiscusFlower from "../illustrations/HibiscusFlower";
-import Lily from "../illustrations/Lily";
-
-const BLOOM =
-  "absolute z-[5] [filter:drop-shadow(0_6px_10px_rgba(60,30,40,.28))]";
-
 export default function Hero({ firstName, lastName, role, bio }) {
   return (
-    <header className="relative flex-1 overflow-hidden px-5 pb-[130px] pt-16 md:px-10 md:pb-[170px] md:pt-[100px]">
-      <BeachScene className="absolute inset-0 z-0 block h-full w-full" />
-
-      <Lily
-        uid="heroB"
-        className={BLOOM}
-        style={{ bottom: 96, left: 36, width: 168, height: 168 }}
-      />
-      <HibiscusFlower
-        uid="heroA"
-        className={BLOOM}
-        style={{ bottom: 52, left: 12, width: 104, height: 104 }}
-      />
-      <HibiscusFlower
-        uid="heroC"
-        className={BLOOM}
-        style={{ bottom: 68, left: 168, width: 74, height: 74, opacity: 0.96 }}
-      />
-      <div className="hero-scrim pointer-events-none absolute inset-0 z-[4]" />
-
-      <div className="relative z-[6] mx-auto max-w-[1000px]">
+    <header className="relative flex flex-1 flex-col justify-center overflow-hidden px-5 pb-[130px] pt-16 md:px-10 md:py-12">
+      {/* phones and tablets (below 1024px) show the busy right side of the drawing behind the copy, so it sits on frosted paper there */}
+      <div className="relative z-[6] mx-auto w-full max-w-[1000px] max-lg:-mx-2 max-lg:rounded-[18px] max-lg:bg-kraft/[.72] max-lg:p-4 max-lg:backdrop-blur-[6px] md:max-lg:w-fit md:max-lg:px-7 md:max-lg:py-6 xl:max-w-[1120px]">
         <h1 className="max-w-[900px] text-[length:clamp(52px,9vw,116px)] font-bold leading-[.9] tracking-[-.025em]">
           {firstName}
           <br />
