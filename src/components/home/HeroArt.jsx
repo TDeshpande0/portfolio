@@ -5,6 +5,10 @@
 // screens the sun still fits.
 const FADE = 240;
 const SRC = "/assets/home/hero-beach.webp";
+// Pre-blurred copies (about 5px and 14px of blur on screen), so phones stack images instead of
+// running live blur filters, which are slow on mobile GPUs. Regenerate them if the drawing changes.
+const LIGHT_BLUR = "/assets/home/hero-beach-light.webp";
+const SOFT_BLUR = "/assets/home/hero-beach-soft.webp";
 const IMG = "h-full w-full object-cover object-[80%_center]";
 
 // Masks rather than overlays, so it fades to whatever is behind it; prefixed for Safari.
@@ -37,16 +41,16 @@ export default function HeroArt() {
         fetchpriority="high"
       />
       <img
-        className={`absolute inset-0 blur-[5px] ${IMG}`}
+        className={`absolute inset-0 ${IMG}`}
         style={PAST_RULE}
-        src={SRC}
+        src={LIGHT_BLUR}
         alt=""
       />
       {/* a blurred copy that takes over toward the bottom, so the drawing softens as it fades */}
       <img
-        className={`absolute inset-0 blur-[14px] ${IMG}`}
+        className={`absolute inset-0 ${IMG}`}
         style={BLUR_IN}
-        src={SRC}
+        src={SOFT_BLUR}
         alt=""
       />
     </div>

@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 // Tune the sticker peel here.
 const PEEL = {
   curl: 30, // px the bottom-right corner stays curled up, hinting it can be peeled
-  curlIn: 350, // ms for the corner to curl up once the page has landed
+  curlIn: 350, // ms for the corner to curl up once the page has landed (on devices with a mouse)
   overshoot: 40, // px past the opposite corner the crease travels to fully clear the card
   click: 900, // ms for the quick peel (or stick back) on click
   dragThreshold: 5, // px a press must move before it counts as a drag rather than a click
@@ -146,11 +146,14 @@ export function usePeel() {
       }
       s.curl = PEEL.curl;
       if (s.peeled || s.drag?.from) return;
+      // Phones draw the curl in one go: each frame of the curl-in redraws the whole header, which
+      // stutters on mobile GPUs right as the page arrives.
+      const phone = !window.matchMedia?.("(hover: hover)").matches;
       tween(
         s,
         s.point ?? homePoint(el, false, 0),
         homePoint(el, false, s.curl),
-        PEEL.curlIn,
+        phone ? 0 : PEEL.curlIn,
         (p) => {
           drawPeel(el, flap.current, p);
           s.point = p;

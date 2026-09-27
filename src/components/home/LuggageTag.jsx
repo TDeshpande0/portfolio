@@ -30,9 +30,12 @@ export default function LuggageTag({
 
   return (
     // 5 per row on desktop, 3 on tablets, 2 on phones. Rotates around the string knot (4px from the top).
+    // will-change gives each tag its own layer: the phone draws the tag and its shadows once and
+    // just rotates that, instead of redrawing the shadow filters every frame (and, in Safari,
+    // drawing them misaligned mid-swing).
     <div
       ref={ref}
-      className="relative flex-[0_0_calc((100%-20px)/2)] origin-[50%_4px] pt-12 sm:basis-[calc((100%-40px)/3)] md:basis-[calc((100%-80px)/5)]"
+      className="relative flex-[0_0_calc((100%-20px)/2)] origin-[50%_4px] pt-12 will-change-transform sm:basis-[calc((100%-40px)/3)] md:basis-[calc((100%-80px)/5)]"
       style={{ transform: `rotate(${tilt}deg)` }}
       onPointerEnter={onPointerEnter}
       onPointerDown={onPointerDown}

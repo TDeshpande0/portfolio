@@ -40,7 +40,7 @@ export default function CampaignsCaseStudyPage() {
   return (
     <>
       <SiteNav
-        mark="CASE STUDY · TANGO CAMPAIGNS"
+        mark="TANGO CAMPAIGNS"
         back={{ to: BACK_TO_WORK, label: "back to work" }}
       />
 

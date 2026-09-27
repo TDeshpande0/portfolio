@@ -104,18 +104,17 @@
     );
   }
 
-  /* Film grain over the photobooth photos: SVG fractal noise, blended so it speckles light and
-     dark areas alike. Raise `opacity` for heavier grain. */
+  /* Film grain over the photobooth photos: a tiling image of faint black and white specks
+     (public/assets/home/film-grain.png). An image rather than a live SVG noise filter, which is
+     slow to draw on phones. Lower `opacity` for subtler grain. */
   .film-grain::before {
     content: "";
     position: absolute;
     inset: 0;
     z-index: 1;
     pointer-events: none;
-    opacity: 0.55;
-    mix-blend-mode: overlay;
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")
-      0 0/160px 160px;
+    opacity: 0.4;
+    background: url("/assets/home/film-grain.png") 0 0 / 80px 80px;
   }
 
   /* Luggage tag card: paper grain and clipped top corners. */
@@ -225,18 +224,18 @@
   }
 
   /* Flight transition backdrop: a circular opening of radius --reveal-r
-     centred on --reveal-x/--reveal-y shows the page underneath. */
+     centred on --reveal-x/--reveal-y shows the page underneath. The gradient is always
+     2px bigger than the opening: at radius 0, a zero-size circle would be "degenerate",
+     which iOS Safari draws as fully see-through (so the navy vanished mid-transition). */
   .flight-backdrop {
-    -webkit-mask: radial-gradient(
-      circle var(--reveal-r) at var(--reveal-x, 50%) var(--reveal-y, 50%),
-      transparent 99%,
-      #000 100%
+    --reveal-mask: radial-gradient(
+      circle calc(var(--reveal-r) + 2px) at var(--reveal-x, 50%)
+        var(--reveal-y, 50%),
+      transparent var(--reveal-r),
+      #000 calc(var(--reveal-r) + 1px)
     );
-    mask: radial-gradient(
-      circle var(--reveal-r) at var(--reveal-x, 50%) var(--reveal-y, 50%),
-      transparent 99%,
-      #000 100%
-    );
+    -webkit-mask: var(--reveal-mask);
+    mask: var(--reveal-mask);
   }
 
   /* Frosted "liquid glass": warm translucent tint, blurred and saturated backdrop,

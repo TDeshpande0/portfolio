@@ -78,13 +78,13 @@ export default function AboutPage() {
               instinct I bring to a design file.
             </p>
             <p className={BODY}>
-              Outside of design I draw on my iPad, work through coloring books,
+              Outside of design, I draw on my iPad, work through coloring books,
               and I am slowly talking myself into paint and pastels. If Michaels
               puts out a ceramic pumpkin in the fall, it is coming home with me.
-              I read thrillers and murder mysteries almost exclusively. I travel
-              every chance I get, mostly for nature, water, and food, and Costa
-              Rica is still the best trip I have taken. A lot of what you see in
-              this portfolio is hand drawn by me.
+              Most of what I read is thrillers, murder mysteries, and science
+              fiction. I travel every chance I get, mostly for nature, oceans,
+              and new cuisines. Costa Rica is still the best trip I have taken.
+              I hand drew a lot of what you see in this portfolio.
             </p>
             {RESUME_URL && (
               <a

@@ -9,7 +9,7 @@ import BackToTop from "./BackToTop";
 // homepage swaps in underneath (already scrolled to where you left it), and the navy fades away.
 const RETURN = {
   close: 550,
-  open: 350,
+  open: 450,
   easing: "cubic-bezier(.6,0,.4,1)",
 };
 
@@ -66,7 +66,9 @@ export default function SiteLayout() {
     const reach = Math.hypot(innerWidth / 2, innerHeight / 2) + 40;
     const close = el.animate(
       [{ "--reveal-r": `${reach}px` }, { "--reveal-r": "0px" }],
-      { duration: RETURN.close, easing: RETURN.easing },
+      // fill: hold the closed circle after it ends; otherwise it snaps back open for a frame
+      // before the page swaps, flashing the case study
+      { duration: RETURN.close, easing: RETURN.easing, fill: "forwards" },
     );
     let active = true;
     close.finished.then(
@@ -86,19 +88,31 @@ export default function SiteLayout() {
   // 2. With the homepage in place underneath, fade the navy away.
   useEffect(() => {
     if (!covered || page.returning) return;
-    const fade = cover.current.animate([{ opacity: 1 }, { opacity: 0 }], {
-      duration: RETURN.open,
-      easing: "ease-out",
-      fill: "forwards",
-    });
+    const el = cover.current;
+    // The circle is closed, so the mask is no longer needed: a plain navy sheet fades more cleanly.
+    el.style.webkitMask = "none";
+    el.style.mask = "none";
     let active = true;
-    fade.finished.then(
-      () => active && setCovered(false),
-      () => {},
+    let fade = null;
+    // Wait for the homepage's first paint (heavy on phones) before fading, so the fade starts from
+    // solid navy instead of the page appearing half-faded.
+    const frame = (fn) => requestAnimationFrame(() => active && fn());
+    frame(() =>
+      frame(() => {
+        fade = el.animate([{ opacity: 1 }, { opacity: 0 }], {
+          duration: RETURN.open,
+          easing: "ease-in-out",
+          fill: "forwards",
+        });
+        fade.finished.then(
+          () => active && setCovered(false),
+          () => {},
+        );
+      }),
     );
     return () => {
       active = false;
-      fade.cancel();
+      fade?.cancel();
     };
   }, [covered, page.returning]);
 
@@ -114,7 +128,7 @@ export default function SiteLayout() {
         <div
           ref={cover}
           aria-hidden="true"
-          className="flight-backdrop fixed inset-0 z-[9998] bg-navy-deep"
+          className="flight-backdrop fixed inset-x-0 -bottom-60 -top-60 z-[9998] bg-navy-deep will-change-[opacity]"
           style={{ "--reveal-r": "9999px" }}
         />
       )}

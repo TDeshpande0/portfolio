@@ -92,6 +92,25 @@ function words(el) {
   return found;
 }
 
+// How far the navy backdrop reaches past the top and bottom of the screen. Phones slide their
+// toolbars in and out when the page changes under the overlay, briefly making the screen taller;
+// the overscan keeps the page from peeking out at the edges while that happens.
+const OVERSCAN = 240;
+
+// Resolves once the screen height has held still for a few frames (or after ~0.4s): the toolbar
+// animation after a page change resizes the screen, so measure only after it has settled.
+async function viewportSettled(frames = 24) {
+  const height = () => window.visualViewport?.height ?? innerHeight;
+  let last = height();
+  let still = 0;
+  for (let i = 0; i < frames && still < 3; i++) {
+    await nextFrame();
+    const now = height();
+    still = now === last ? still + 1 : 0;
+    last = now;
+  }
+}
+
 async function waitFor(selector, frames = 90) {
   for (let i = 0; i < frames; i++) {
     const el = document.querySelector(selector);
@@ -116,6 +135,8 @@ export default function FlightTransition({ children }) {
 
   // Leave a bookmark on the page we're leaving (the ticket's section), so browser Back returns to it.
   const depart = (path, ticket) => {
+    // The frozen page (see freezeScroll) is swapped in at the top, so nothing has to scroll.
+    document.body.style.top = "0px";
     const section = ticket?.closest("[id]")?.id;
     if (section) {
       navigate(`${window.location.pathname}#${section}`, { replace: true });
@@ -166,7 +187,10 @@ export default function FlightTransition({ children }) {
       }).finished;
       return null;
     }
-    await nextFrame();
+    // Let the new page be drawn for the first time (a heavy frame on phones) and any toolbar
+    // resize finish while the lifted ticket is still, rather than stalling or shifting the card
+    // mid-rise.
+    await viewportSettled();
     // The real header's shadow is switched off while the flying copy (with its own shadow) sits on
     // top of it; otherwise the two stack into a darker shadow that visibly lightens at the hand-off.
     const headerFrame = card.closest("[data-flight-frame]");
@@ -323,7 +347,7 @@ export default function FlightTransition({ children }) {
         Math.max(cy, innerHeight - cy),
       ) + 40;
     backdrop.current.style.setProperty("--reveal-x", px(cx));
-    backdrop.current.style.setProperty("--reveal-y", px(cy));
+    backdrop.current.style.setProperty("--reveal-y", px(cy + OVERSCAN));
     const reveal = animate(
       backdrop.current,
       [{ "--reveal-r": px(startRadius) }, { "--reveal-r": px(reach) }],
@@ -338,6 +362,30 @@ export default function FlightTransition({ children }) {
     await reveal.finished;
     // The copies now match the real header exactly, so removing them is invisible.
     return targetTitle;
+  };
+
+  // Pins the page where it is and sets the window's scroll to 0, without anything visibly moving.
+  // The new page then appears at the top with no scroll jump: on iPhone, a scroll jump while the
+  // fixed overlay is up draws the overlay in the wrong place for a couple of frames, so it blinks.
+  const freezeScroll = () => {
+    const y = window.scrollY;
+    Object.assign(document.body.style, {
+      position: "fixed",
+      top: px(-y),
+      left: "0px",
+      right: "0px",
+    });
+    return () => {
+      const top = parseFloat(document.body.style.top) || 0;
+      Object.assign(document.body.style, {
+        position: "",
+        top: "",
+        left: "",
+        right: "",
+      });
+      // Only if the page never switched (top is still offset): put the scroll back where it was.
+      if (top) window.scrollTo(0, -top);
+    };
   };
 
   const flyTo = async (path, ticket) => {
@@ -363,6 +411,7 @@ export default function FlightTransition({ children }) {
     window.addEventListener("keydown", blockKeys);
 
     let landedTitle = null;
+    const unfreeze = freezeScroll();
     try {
       flushSync(() => setFlight({ project, src }));
       landedTitle = await run(path, ticket, src);
@@ -370,6 +419,7 @@ export default function FlightTransition({ children }) {
       window.removeEventListener("wheel", blockScroll);
       window.removeEventListener("touchmove", blockScroll);
       window.removeEventListener("keydown", blockKeys);
+      unfreeze();
       // Remove the copies and give the header its shadow back in the same frame.
       flushSync(() => setFlight(null));
       if (hiddenShadow.current) {
@@ -392,7 +442,8 @@ export default function FlightTransition({ children }) {
         >
           <div
             ref={backdrop}
-            className="flight-backdrop absolute inset-0 bg-navy-deep opacity-0"
+            className="flight-backdrop absolute inset-x-0 bg-navy-deep opacity-0"
+            style={{ top: -OVERSCAN, bottom: -OVERSCAN }}
           />
 
           {/* card shell: holds no text, so it can resize without distorting */}

@@ -42,7 +42,7 @@ export default function TangoCaseStudyPage() {
   return (
     <>
       <SiteNav
-        mark="CASE STUDY · TANGO PORTAL"
+        mark="TANGO PORTAL"
         back={{ to: BACK_TO_WORK, label: "back to work" }}
       />
 

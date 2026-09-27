@@ -1,6 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./index.html", "./src/**/*.{js,jsx}"],
+  // Hover styles only on devices that can really hover. Phones otherwise keep a tapped element
+  // "hovered", so hover-only effects (like the header's hint pill) flash on after a tap.
+  future: { hoverOnlyWhenSupported: true },
   theme: {
     // The design's layout switches at 820px (tablet/desktop) and 520px (phone).
     screens: {

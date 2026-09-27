@@ -120,9 +120,10 @@ function PeelFrame({ pass, back }) {
     >
       <SummaryCard {...back} hidden={!peeled} className="[grid-area:1/1]" />
       {pass(card, peeled, "[grid-area:1/1]")}
-      {/* the shadow sits on a wrapper, since the flap's own clip would cut it off; the flap keeps
+      {/* the shadow sits on a wrapper, since the flap's own clip would cut it off (laptops only:
+          redrawing it every frame of a peel is too slow on phones, where the shading gives depth); the flap keeps
           the pass's notches, so a lifted corner carries its hole punch with it */}
-      <div className="pointer-events-none [filter:drop-shadow(-4px_-2px_6px_rgba(0,0,0,.18))] [grid-area:1/1]">
+      <div className="pointer-events-none [grid-area:1/1] [@media(hover:hover)]:[filter:drop-shadow(-4px_-2px_6px_rgba(0,0,0,.18))]">
         <div
           ref={flap}
           className="ticket-main invisible h-full w-full origin-top-left rounded-[6px_6px_0_0] md:rounded-[6px_0_0_6px]"

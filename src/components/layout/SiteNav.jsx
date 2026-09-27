@@ -2,12 +2,13 @@ import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useScrolledPast } from "../../hooks/useScrolledPast";
+import { scrollToHash, scrollToTop } from "../../utils/scrollToHash";
 
 // The docked bar's exact height (20px padding + a 20.2px row + 3px rule), so the page never shifts.
 const DOCKED_HEIGHT = "h-[63.2px]";
 const EASE = "ease-[cubic-bezier(.2,.8,.2,1)]";
 const LINK =
-  "flex items-center gap-[6px] border-b font-mono text-[12px] text-ink no-underline";
+  "flex shrink-0 items-center gap-[6px] whitespace-nowrap border-b font-mono text-[12px] text-ink no-underline";
 const HAMBURGER_BAR =
   "absolute left-0 h-[2px] w-5 rounded-full bg-ink transition-all duration-300";
 
@@ -44,7 +45,10 @@ function NavMenu({ links }) {
               <li key={href}>
                 <a
                   href={href}
-                  onClick={() => close()}
+                  onClick={(e) => {
+                    close();
+                    scrollToHash(e, href);
+                  }}
                   className="flex items-baseline gap-3 rounded-2xl px-4 py-3 outline-none transition-colors hover:bg-white/60 focus-visible:bg-white/60"
                 >
                   <span className="font-mono text-[10px] tracking-[1px] text-muted">
@@ -80,13 +84,20 @@ export default function SiteNav({ mark, links, back }) {
         <nav
           aria-label="Main"
           data-detached={detached}
-          className={`pointer-events-auto mx-auto flex items-center justify-between transition-[max-width,height,padding,border-radius,border-width,border-color,background-color,box-shadow,backdrop-filter] duration-500 ${EASE} ${
+          className={`pointer-events-auto mx-auto flex items-center justify-between gap-4 transition-[max-width,height,padding,border-radius,border-width,border-color,background-color,box-shadow,backdrop-filter] duration-500 ${EASE} ${
             detached
               ? "liquid-glass h-[52px] max-w-[1000px] rounded-[26px] border border-white/70 px-5 md:px-7"
               : `${DOCKED_HEIGHT} max-w-full border-b-[3px] border-ink bg-kraft/30 px-5 backdrop-blur-[6px] md:px-10`
           }`}
         >
-          <div className="font-mono text-[12px] tracking-[2px]">{mark}</div>
+          {/* scrolls back to the top; one line only: a long label is cut short with "…" */}
+          <a
+            href="#"
+            onClick={scrollToTop}
+            className="min-w-0 truncate font-mono text-[12px] tracking-[2px] text-ink no-underline"
+          >
+            {mark}
+          </a>
 
           {links && (
             <>
@@ -95,6 +106,7 @@ export default function SiteNav({ mark, links, back }) {
                   <a
                     key={href}
                     href={href}
+                    onClick={(e) => scrollToHash(e, href)}
                     className={`${LINK} border-transparent hover:border-airmail hover:text-airmail`}
                   >
                     {label}
