@@ -51,8 +51,8 @@ export const PASSPORT_PHOTOS = [
   },
 ];
 
-// Luggage tags in the skills section. `flash` is the tag's band colour,
-// `tilt` its resting angle in degrees.
+// Luggage tags in the skills section. `flash` is the tag's band colour, `tilt` its resting angle
+// in degrees. Clicking a tag flips it over to `details` and the projects it was `usedOn`.
 export const SKILL_TAGS = [
   {
     code: "FIG",
@@ -61,6 +61,13 @@ export const SKILL_TAGS = [
     flash: "#FF5A4E",
     serial: "BAG‑0001",
     tilt: -2.5,
+    details: [
+      "Components and variants",
+      "Auto layout",
+      "Interactive prototypes",
+      "Developer handoff",
+    ],
+    usedOn: ["Tango Portal", "Delta"],
   },
   {
     code: "RES",
@@ -69,6 +76,14 @@ export const SKILL_TAGS = [
     flash: "#2FA968",
     serial: "BAG‑0002",
     tilt: 2.5,
+    details: [
+      "Competitive analysis",
+      "Surveys and interviews",
+      "Personas",
+      "Usability testing",
+      "Affinity mapping",
+    ],
+    usedOn: ["Delta", "Tango Portal"],
   },
   {
     code: "PRO",
@@ -77,6 +92,13 @@ export const SKILL_TAGS = [
     flash: "#FFC53D",
     serial: "BAG‑0003",
     tilt: -2.5,
+    details: [
+      "Low to high fidelity",
+      "Clickable flows",
+      "States and edge cases",
+      "Testing before build",
+    ],
+    usedOn: ["Delta", "Tango Portal"],
   },
   {
     code: "SYS",
@@ -85,6 +107,13 @@ export const SKILL_TAGS = [
     flash: "#FF5D8F",
     serial: "BAG‑0004",
     tilt: 2.5,
+    details: [
+      "Company UI toolkits",
+      "Component reuse",
+      "Extending patterns",
+      "Cross-page consistency",
+    ],
+    usedOn: ["Tango Portal"],
   },
   {
     code: "ACC",
@@ -93,6 +122,12 @@ export const SKILL_TAGS = [
     flash: "#00A6A0",
     serial: "BAG‑0005",
     tilt: -2.5,
+    details: [
+      "Assistive-need personas",
+      "Surfacing support options",
+      "Contrast and legibility",
+    ],
+    usedOn: ["Delta"],
   },
 ];
 
